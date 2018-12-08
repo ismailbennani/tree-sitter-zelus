@@ -1371,20 +1371,8 @@
                   ]
                 },
                 {
-                  "type": "STRING",
-                  "value": "do"
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "_equation_list"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
+                  "type": "SYMBOL",
+                  "name": "_block_optional_equation"
                 }
               ]
             },
@@ -1465,42 +1453,35 @@
                           "type": "SEQ",
                           "members": [
                             {
-                              "type": "CHOICE",
+                              "type": "SEQ",
                               "members": [
                                 {
-                                  "type": "SYMBOL",
-                                  "name": "_let_list"
+                                  "type": "CHOICE",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_let_list"
+                                    },
+                                    {
+                                      "type": "BLANK"
+                                    }
+                                  ]
                                 },
                                 {
-                                  "type": "BLANK"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "CHOICE",
-                              "members": [
-                                {
-                                  "type": "SYMBOL",
-                                  "name": "_local_list"
+                                  "type": "CHOICE",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_local_list"
+                                    },
+                                    {
+                                      "type": "BLANK"
+                                    }
+                                  ]
                                 },
                                 {
-                                  "type": "BLANK"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "STRING",
-                              "value": "do"
-                            },
-                            {
-                              "type": "CHOICE",
-                              "members": [
-                                {
                                   "type": "SYMBOL",
-                                  "name": "_equation_list"
-                                },
-                                {
-                                  "type": "BLANK"
+                                  "name": "_block_optional_equation"
                                 }
                               ]
                             },
@@ -1621,42 +1602,35 @@
                                         "type": "SEQ",
                                         "members": [
                                           {
-                                            "type": "CHOICE",
+                                            "type": "SEQ",
                                             "members": [
                                               {
-                                                "type": "SYMBOL",
-                                                "name": "_let_list"
+                                                "type": "CHOICE",
+                                                "members": [
+                                                  {
+                                                    "type": "SYMBOL",
+                                                    "name": "_let_list"
+                                                  },
+                                                  {
+                                                    "type": "BLANK"
+                                                  }
+                                                ]
                                               },
                                               {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_local_list"
+                                                "type": "CHOICE",
+                                                "members": [
+                                                  {
+                                                    "type": "SYMBOL",
+                                                    "name": "_local_list"
+                                                  },
+                                                  {
+                                                    "type": "BLANK"
+                                                  }
+                                                ]
                                               },
                                               {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "do"
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
                                                 "type": "SYMBOL",
-                                                "name": "_equation_list"
-                                              },
-                                              {
-                                                "type": "BLANK"
+                                                "name": "_block_optional_equation"
                                               }
                                             ]
                                           },
@@ -1766,42 +1740,35 @@
                                               "type": "SEQ",
                                               "members": [
                                                 {
-                                                  "type": "CHOICE",
+                                                  "type": "SEQ",
                                                   "members": [
                                                     {
-                                                      "type": "SYMBOL",
-                                                      "name": "_let_list"
+                                                      "type": "CHOICE",
+                                                      "members": [
+                                                        {
+                                                          "type": "SYMBOL",
+                                                          "name": "_let_list"
+                                                        },
+                                                        {
+                                                          "type": "BLANK"
+                                                        }
+                                                      ]
                                                     },
                                                     {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_local_list"
+                                                      "type": "CHOICE",
+                                                      "members": [
+                                                        {
+                                                          "type": "SYMBOL",
+                                                          "name": "_local_list"
+                                                        },
+                                                        {
+                                                          "type": "BLANK"
+                                                        }
+                                                      ]
                                                     },
                                                     {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "do"
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
                                                       "type": "SYMBOL",
-                                                      "name": "_equation_list"
-                                                    },
-                                                    {
-                                                      "type": "BLANK"
+                                                      "name": "_block_optional_equation"
                                                     }
                                                   ]
                                                 },
@@ -1923,42 +1890,35 @@
                                         "type": "SEQ",
                                         "members": [
                                           {
-                                            "type": "CHOICE",
+                                            "type": "SEQ",
                                             "members": [
                                               {
-                                                "type": "SYMBOL",
-                                                "name": "_let_list"
+                                                "type": "CHOICE",
+                                                "members": [
+                                                  {
+                                                    "type": "SYMBOL",
+                                                    "name": "_let_list"
+                                                  },
+                                                  {
+                                                    "type": "BLANK"
+                                                  }
+                                                ]
                                               },
                                               {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_local_list"
+                                                "type": "CHOICE",
+                                                "members": [
+                                                  {
+                                                    "type": "SYMBOL",
+                                                    "name": "_local_list"
+                                                  },
+                                                  {
+                                                    "type": "BLANK"
+                                                  }
+                                                ]
                                               },
                                               {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "do"
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
                                                 "type": "SYMBOL",
-                                                "name": "_equation_list"
-                                              },
-                                              {
-                                                "type": "BLANK"
+                                                "name": "_block_optional_equation"
                                               }
                                             ]
                                           },
@@ -2068,42 +2028,35 @@
                                               "type": "SEQ",
                                               "members": [
                                                 {
-                                                  "type": "CHOICE",
+                                                  "type": "SEQ",
                                                   "members": [
                                                     {
-                                                      "type": "SYMBOL",
-                                                      "name": "_let_list"
+                                                      "type": "CHOICE",
+                                                      "members": [
+                                                        {
+                                                          "type": "SYMBOL",
+                                                          "name": "_let_list"
+                                                        },
+                                                        {
+                                                          "type": "BLANK"
+                                                        }
+                                                      ]
                                                     },
                                                     {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_local_list"
+                                                      "type": "CHOICE",
+                                                      "members": [
+                                                        {
+                                                          "type": "SYMBOL",
+                                                          "name": "_local_list"
+                                                        },
+                                                        {
+                                                          "type": "BLANK"
+                                                        }
+                                                      ]
                                                     },
                                                     {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "do"
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
                                                       "type": "SYMBOL",
-                                                      "name": "_equation_list"
-                                                    },
-                                                    {
-                                                      "type": "BLANK"
+                                                      "name": "_block_optional_equation"
                                                     }
                                                   ]
                                                 },
@@ -2220,42 +2173,35 @@
                                         "type": "SEQ",
                                         "members": [
                                           {
-                                            "type": "CHOICE",
+                                            "type": "SEQ",
                                             "members": [
                                               {
-                                                "type": "SYMBOL",
-                                                "name": "_let_list"
+                                                "type": "CHOICE",
+                                                "members": [
+                                                  {
+                                                    "type": "SYMBOL",
+                                                    "name": "_let_list"
+                                                  },
+                                                  {
+                                                    "type": "BLANK"
+                                                  }
+                                                ]
                                               },
                                               {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_local_list"
+                                                "type": "CHOICE",
+                                                "members": [
+                                                  {
+                                                    "type": "SYMBOL",
+                                                    "name": "_local_list"
+                                                  },
+                                                  {
+                                                    "type": "BLANK"
+                                                  }
+                                                ]
                                               },
                                               {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "do"
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
                                                 "type": "SYMBOL",
-                                                "name": "_equation_list"
-                                              },
-                                              {
-                                                "type": "BLANK"
+                                                "name": "_block_optional_equation"
                                               }
                                             ]
                                           },
@@ -2365,42 +2311,35 @@
                                               "type": "SEQ",
                                               "members": [
                                                 {
-                                                  "type": "CHOICE",
+                                                  "type": "SEQ",
                                                   "members": [
                                                     {
-                                                      "type": "SYMBOL",
-                                                      "name": "_let_list"
+                                                      "type": "CHOICE",
+                                                      "members": [
+                                                        {
+                                                          "type": "SYMBOL",
+                                                          "name": "_let_list"
+                                                        },
+                                                        {
+                                                          "type": "BLANK"
+                                                        }
+                                                      ]
                                                     },
                                                     {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_local_list"
+                                                      "type": "CHOICE",
+                                                      "members": [
+                                                        {
+                                                          "type": "SYMBOL",
+                                                          "name": "_local_list"
+                                                        },
+                                                        {
+                                                          "type": "BLANK"
+                                                        }
+                                                      ]
                                                     },
                                                     {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "do"
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
                                                       "type": "SYMBOL",
-                                                      "name": "_equation_list"
-                                                    },
-                                                    {
-                                                      "type": "BLANK"
+                                                      "name": "_block_optional_equation"
                                                     }
                                                   ]
                                                 },
@@ -2478,12 +2417,8 @@
                   ]
                 },
                 {
-                  "type": "STRING",
-                  "value": "do"
-                },
-                {
                   "type": "SYMBOL",
-                  "name": "_expression"
+                  "name": "block_expression"
                 }
               ]
             },
@@ -2564,42 +2499,35 @@
                           "type": "SEQ",
                           "members": [
                             {
-                              "type": "CHOICE",
+                              "type": "SEQ",
                               "members": [
                                 {
-                                  "type": "SYMBOL",
-                                  "name": "_let_list"
+                                  "type": "CHOICE",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_let_list"
+                                    },
+                                    {
+                                      "type": "BLANK"
+                                    }
+                                  ]
                                 },
                                 {
-                                  "type": "BLANK"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "CHOICE",
-                              "members": [
-                                {
-                                  "type": "SYMBOL",
-                                  "name": "_local_list"
+                                  "type": "CHOICE",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_local_list"
+                                    },
+                                    {
+                                      "type": "BLANK"
+                                    }
+                                  ]
                                 },
                                 {
-                                  "type": "BLANK"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "STRING",
-                              "value": "do"
-                            },
-                            {
-                              "type": "CHOICE",
-                              "members": [
-                                {
                                   "type": "SYMBOL",
-                                  "name": "_equation_list"
-                                },
-                                {
-                                  "type": "BLANK"
+                                  "name": "_block_optional_equation"
                                 }
                               ]
                             },
@@ -2720,42 +2648,35 @@
                                         "type": "SEQ",
                                         "members": [
                                           {
-                                            "type": "CHOICE",
+                                            "type": "SEQ",
                                             "members": [
                                               {
-                                                "type": "SYMBOL",
-                                                "name": "_let_list"
+                                                "type": "CHOICE",
+                                                "members": [
+                                                  {
+                                                    "type": "SYMBOL",
+                                                    "name": "_let_list"
+                                                  },
+                                                  {
+                                                    "type": "BLANK"
+                                                  }
+                                                ]
                                               },
                                               {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_local_list"
+                                                "type": "CHOICE",
+                                                "members": [
+                                                  {
+                                                    "type": "SYMBOL",
+                                                    "name": "_local_list"
+                                                  },
+                                                  {
+                                                    "type": "BLANK"
+                                                  }
+                                                ]
                                               },
                                               {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "do"
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
                                                 "type": "SYMBOL",
-                                                "name": "_equation_list"
-                                              },
-                                              {
-                                                "type": "BLANK"
+                                                "name": "_block_optional_equation"
                                               }
                                             ]
                                           },
@@ -2865,42 +2786,35 @@
                                               "type": "SEQ",
                                               "members": [
                                                 {
-                                                  "type": "CHOICE",
+                                                  "type": "SEQ",
                                                   "members": [
                                                     {
-                                                      "type": "SYMBOL",
-                                                      "name": "_let_list"
+                                                      "type": "CHOICE",
+                                                      "members": [
+                                                        {
+                                                          "type": "SYMBOL",
+                                                          "name": "_let_list"
+                                                        },
+                                                        {
+                                                          "type": "BLANK"
+                                                        }
+                                                      ]
                                                     },
                                                     {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_local_list"
+                                                      "type": "CHOICE",
+                                                      "members": [
+                                                        {
+                                                          "type": "SYMBOL",
+                                                          "name": "_local_list"
+                                                        },
+                                                        {
+                                                          "type": "BLANK"
+                                                        }
+                                                      ]
                                                     },
                                                     {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "do"
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
                                                       "type": "SYMBOL",
-                                                      "name": "_equation_list"
-                                                    },
-                                                    {
-                                                      "type": "BLANK"
+                                                      "name": "_block_optional_equation"
                                                     }
                                                   ]
                                                 },
@@ -3022,42 +2936,35 @@
                                         "type": "SEQ",
                                         "members": [
                                           {
-                                            "type": "CHOICE",
+                                            "type": "SEQ",
                                             "members": [
                                               {
-                                                "type": "SYMBOL",
-                                                "name": "_let_list"
+                                                "type": "CHOICE",
+                                                "members": [
+                                                  {
+                                                    "type": "SYMBOL",
+                                                    "name": "_let_list"
+                                                  },
+                                                  {
+                                                    "type": "BLANK"
+                                                  }
+                                                ]
                                               },
                                               {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_local_list"
+                                                "type": "CHOICE",
+                                                "members": [
+                                                  {
+                                                    "type": "SYMBOL",
+                                                    "name": "_local_list"
+                                                  },
+                                                  {
+                                                    "type": "BLANK"
+                                                  }
+                                                ]
                                               },
                                               {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "do"
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
                                                 "type": "SYMBOL",
-                                                "name": "_equation_list"
-                                              },
-                                              {
-                                                "type": "BLANK"
+                                                "name": "_block_optional_equation"
                                               }
                                             ]
                                           },
@@ -3167,42 +3074,35 @@
                                               "type": "SEQ",
                                               "members": [
                                                 {
-                                                  "type": "CHOICE",
+                                                  "type": "SEQ",
                                                   "members": [
                                                     {
-                                                      "type": "SYMBOL",
-                                                      "name": "_let_list"
+                                                      "type": "CHOICE",
+                                                      "members": [
+                                                        {
+                                                          "type": "SYMBOL",
+                                                          "name": "_let_list"
+                                                        },
+                                                        {
+                                                          "type": "BLANK"
+                                                        }
+                                                      ]
                                                     },
                                                     {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_local_list"
+                                                      "type": "CHOICE",
+                                                      "members": [
+                                                        {
+                                                          "type": "SYMBOL",
+                                                          "name": "_local_list"
+                                                        },
+                                                        {
+                                                          "type": "BLANK"
+                                                        }
+                                                      ]
                                                     },
                                                     {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "do"
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
                                                       "type": "SYMBOL",
-                                                      "name": "_equation_list"
-                                                    },
-                                                    {
-                                                      "type": "BLANK"
+                                                      "name": "_block_optional_equation"
                                                     }
                                                   ]
                                                 },
@@ -3319,42 +3219,35 @@
                                         "type": "SEQ",
                                         "members": [
                                           {
-                                            "type": "CHOICE",
+                                            "type": "SEQ",
                                             "members": [
                                               {
-                                                "type": "SYMBOL",
-                                                "name": "_let_list"
+                                                "type": "CHOICE",
+                                                "members": [
+                                                  {
+                                                    "type": "SYMBOL",
+                                                    "name": "_let_list"
+                                                  },
+                                                  {
+                                                    "type": "BLANK"
+                                                  }
+                                                ]
                                               },
                                               {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_local_list"
+                                                "type": "CHOICE",
+                                                "members": [
+                                                  {
+                                                    "type": "SYMBOL",
+                                                    "name": "_local_list"
+                                                  },
+                                                  {
+                                                    "type": "BLANK"
+                                                  }
+                                                ]
                                               },
                                               {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "do"
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
                                                 "type": "SYMBOL",
-                                                "name": "_equation_list"
-                                              },
-                                              {
-                                                "type": "BLANK"
+                                                "name": "_block_optional_equation"
                                               }
                                             ]
                                           },
@@ -3464,42 +3357,35 @@
                                               "type": "SEQ",
                                               "members": [
                                                 {
-                                                  "type": "CHOICE",
+                                                  "type": "SEQ",
                                                   "members": [
                                                     {
-                                                      "type": "SYMBOL",
-                                                      "name": "_let_list"
+                                                      "type": "CHOICE",
+                                                      "members": [
+                                                        {
+                                                          "type": "SYMBOL",
+                                                          "name": "_let_list"
+                                                        },
+                                                        {
+                                                          "type": "BLANK"
+                                                        }
+                                                      ]
                                                     },
                                                     {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_local_list"
+                                                      "type": "CHOICE",
+                                                      "members": [
+                                                        {
+                                                          "type": "SYMBOL",
+                                                          "name": "_local_list"
+                                                        },
+                                                        {
+                                                          "type": "BLANK"
+                                                        }
+                                                      ]
                                                     },
                                                     {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "do"
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
                                                       "type": "SYMBOL",
-                                                      "name": "_equation_list"
-                                                    },
-                                                    {
-                                                      "type": "BLANK"
+                                                      "name": "_block_optional_equation"
                                                     }
                                                   ]
                                                 },
@@ -3642,6 +3528,45 @@
           }
         ]
       }
+    },
+    "block_equation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "do"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_equation_list"
+        }
+      ]
+    },
+    "block_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "do"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_expression"
+        }
+      ]
+    },
+    "_block_optional_equation": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "do"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "block_equation"
+        }
+      ]
     },
     "_block_of_equation": {
       "type": "SYMBOL",
@@ -4048,7 +3973,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "_index"
+                  "name": "forall_index"
                 },
                 {
                   "type": "REPEAT",
@@ -4061,7 +3986,7 @@
                       },
                       {
                         "type": "SYMBOL",
-                        "name": "_index"
+                        "name": "forall_index"
                       }
                     ]
                   }
@@ -4098,12 +4023,8 @@
               ]
             },
             {
-              "type": "STRING",
-              "value": "do"
-            },
-            {
               "type": "SYMBOL",
-              "name": "_equation_list"
+              "name": "block_equation"
             }
           ]
         },
@@ -5697,7 +5618,7 @@
         }
       ]
     },
-    "_index": {
+    "forall_index": {
       "type": "CHOICE",
       "members": [
         {

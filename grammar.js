@@ -13,16 +13,13 @@
 // (*  Zelus is developed in the INRIA PARKAS team.                          *)
 // (*                                                                        *)
 // (**************************************************************************)
-// Grammar description for the synchronous language Zélus.
-// This rule names are close to those defined in the Menhir grammar used by
-// `zeluc`.
-// This grammar should be very close to the actual grammar used by `zeluc`
-// (up to  associativity/precedence rules)
+// This grammar should give results that are very close to the actual grammar
+// used by `zeluc` (up to  associativity/precedence rules)
 // ---------------------------------------------------------------------------
 
 'use strict';
 
-// shamelessly stolen from (tree-sitter-c/grammar.js)[https://github.com/tree-sitter/tree-sitter-ocaml/blob/master/grammar.js]
+// shamelessly stolen from (tree-sitter-ocaml/grammar.js)[https://github.com/tree-sitter/tree-sitter-ocaml/blob/master/grammar.js]
 const PREC = {
     prefix: 19,
     dot: 18,
@@ -50,11 +47,6 @@ const PREC = {
 module.exports = grammar({
     name: 'zelus',
     extras: ($) => [/\s/, $.comment],
-    // inline: ($) => [
-    //     $._seq_expression,
-    //     $.arrow, $.kind, $._equation_list,
-    //     $._block_of_equation
-    // ],
     conflicts: ($) => [
         [$.kind, $.let_declaration]
     ],
@@ -305,23 +297,28 @@ module.exports = grammar({
         ),
 
 
-        _automaton_handlers_equation: ($) =>
-            automaton_handlers(
-                optional($._equation_list)
-            )($),
-        _automaton_handlers_expression: ($) =>
-            automaton_handlers(
-                $._expression
-            )($),
-        _match_handlers_block_eq: ($) =>
-            match_handlers(
-                $._block_of_equation
-            )($),
-        _match_handlers_expression: ($) =>
-            match_handlers(
-                $._expression
-            )($),
+        _automaton_handlers_equation: automaton_handlers(
+            '_block_optional_equation'),
+        _automaton_handlers_expression: automaton_handlers(
+            'block_expression'
+        ),
+        _match_handlers_block_eq: match_handlers(
+            '_block_of_equation'
+        ),
+        _match_handlers_expression: match_handlers(
+            '_expression'
+        ),
 
+        block_equation: ($) => seq(
+            'do', $._equation_list
+        ),
+        block_expression: ($) => seq(
+            'do', $._expression
+        ),
+        _block_optional_equation: ($) => choice(
+            'do',
+            $.block_equation
+        ),
 
         _block_of_equation: ($) => $._simple_equation,
         do_done_block: ($) => seq(
@@ -399,8 +396,8 @@ module.exports = grammar({
         ),
         forall_equation: ($) => seq(
             'forall',
-            list_of(',', $._index),
-            block($._equation_list)($),
+            list_of(',', $.forall_index),
+            block('block_equation')($),
             optional(
                 seq(
                     'initialize',
@@ -649,7 +646,7 @@ module.exports = grammar({
         ),
 
 
-        _index: ($) => choice(
+        forall_index: ($) => choice(
             seq($._ide, 'in', $._simple_expression),
             seq($._ide, 'out', $._ide),
             seq(
@@ -822,22 +819,19 @@ function present_handlers(pattern, rule) {
     );
 }
 
-function block(rule) {
+function block(rule_name) {
     return ($) => seq(
         optional($._let_list),
         optional($._local_list),
-        'do',
-        rule
+        $[rule_name]
     );
 }
 
-function automaton_handlers(rule) {
+function automaton_handlers(rule_name) {
     function _emission($) {
         return choice(
             seq($.one_let, 'in', optional($._let_list)),
-            seq(optional($._let_list),
-                optional($._local_list),
-                'do', optional($._equation_list),
+            seq(block('_block_optional_equation')($),
                 'in')
         );
     }
@@ -853,8 +847,7 @@ function automaton_handlers(rule) {
     function _escape($) {
         return choice(
             seq($._scondpat, _then_cont($), $._state),
-            seq($._scondpat, _then_cont($),
-                _emission($),
+            seq($._scondpat, _then_cont($), _emission($),
                 $._state)
         );
     }
@@ -869,7 +862,7 @@ function automaton_handlers(rule) {
     return ($) => prec.right(PREC.seq, repeat1(seq(
         $._state_pat,
         '->',
-        block(rule)($),
+        block(rule_name)($),
         choice(
             'done',
             seq(_then_cont($), $._state),
@@ -884,7 +877,7 @@ function automaton_handlers(rule) {
         ))));
 }
 
-function match_handlers(rule) {
+function match_handlers(rule_name) {
     return ($) =>
-        present_handlers($.pattern, rule);
+        present_handlers($.pattern, $[rule_name]);
 }

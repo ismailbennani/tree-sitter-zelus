@@ -11,7 +11,8 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(automaton_equation
-			(constructor) (eq_equation (pattern (identifier)) (integer)))
+			(constructor)
+				(block_equation (eq_equation (pattern (identifier)) (integer))))
 ))
 
 ==================================
@@ -27,7 +28,10 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(automaton_equation
-			(constructor) (eq_equation (pattern (identifier)) (integer))  (constructor))
+			(constructor)
+				(block_equation
+					(eq_equation (pattern (identifier)) (integer)))
+					(constructor))
 ))
 
 ==================================
@@ -43,8 +47,9 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(automaton_equation
-			(constructor) (eq_equation (pattern (identifier)) (integer))
-		  	(emit_equation (identifier)) (constructor) (integer))
+			(constructor)
+				(block_equation (eq_equation (pattern (identifier)) (integer)))
+		  	(block_equation (emit_equation (identifier))) (constructor) (integer))
 ))
 
 ==================================
@@ -64,10 +69,12 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 (automaton_equation
-		(constructor) (eq_equation (pattern (identifier)) (integer))
+		(constructor)
+		 (block_equation (eq_equation (pattern (identifier)) (integer)))
 		 (one_let (eq_equation (pattern (identifier)) (integer)))
 		 (one_local (identifier)  (integer))
-		 (eq_equation (pattern (identifier)) (integer)) (constructor) (integer)
+		 (block_equation (eq_equation (pattern (identifier)) (integer)))
+		  	(constructor) (integer)
 		 (constructor))
 ))
 
@@ -214,12 +221,13 @@ let hybrid f x = () where
 
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
-		 (forall_equation (identifier)  (integer) (integer)
-			  (identifier) (integer)
-			  (identifier) (identifier)
+		 (forall_equation
+		 		(forall_index (identifier) (integer) (integer))
+			  (forall_index (identifier) (integer))
+			  (forall_index (identifier) (identifier))
 		 (one_let (eq_equation (pattern (identifier)) (integer)))
 		 (one_local (identifier)) (one_local (identifier))
-			(eq_equation (pattern (identifier)) (integer))
+			(block_equation (eq_equation (pattern (identifier)) (integer)))
 			 (last_equation (identifier) (integer))
 		)
 ))
