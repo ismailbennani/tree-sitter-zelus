@@ -739,7 +739,8 @@ module.exports = grammar({
             seq($.constructor, '(', list_of(
                     ',',
                     $.identifier),
-                ')')
+                ')'
+            )
         ),
 
 
@@ -747,14 +748,17 @@ module.exports = grammar({
             choice(
                 $._ide,
                 seq($.constructor, '.', $._ide)
-            )),
+            )
+        ),
         _ide: ($) => choice(
             $.identifier,
-            seq('(', $.infx, ')')),
+            seq('(', $.infx, ')')
+        ),
 
 
         pattern_label: ($) => seq(
-            $._ext_ident, '=', $.pattern),
+            $._ext_ident, '=', $.pattern
+        ),
         _label_type: ($) => seq(
             $.identifier, ':', $._type_expression
         ),
@@ -768,10 +772,12 @@ module.exports = grammar({
             $.float,
             $.string,
             $.bool,
-            $.char),
+            $.char
+        ),
         _constant: ($) => choice(
             $._atomic_constant,
-            $._ext_ident),
+            $._ext_ident
+        ),
 
         _infx0: ($) => choice(
             'fby', '||',
@@ -793,8 +799,7 @@ module.exports = grammar({
             /\*\*[\!\$\%\&\*\+\-\.\/\:<\=\>\?\@\^\|\~]*/
         ),
         infx: ($) => choice(
-            $._infx0, $._infx1, $._infx2, $
-            ._infx3,
+            $._infx0, $._infx1, $._infx2, $._infx3,
             $._infx4
         ),
 
@@ -807,8 +812,9 @@ module.exports = grammar({
 
         identifier: ($) =>
             /[a-z_][a-zA-Z0-9_']*/,
-        constructor: ($) =>
-            /[A-Z][a-zA-Z0-9_']*/,
+        _constructor: ($) =>
+            /[A-Z][a-zA-Z0-9_']*(\.[A-Z][a-zA-Z0-9_']*)?/,
+        constructor: ($) => $._constructor,
         type_var: ($) =>
             /'[a-z_][a-zA-Z0-9_']*/,
 
@@ -843,8 +849,7 @@ module.exports = grammar({
         bool: ($) => choice('true', 'false'),
 
         kind: ($) => choice(
-            'node', 'hybrid', 'discrete',
-            'fun',
+            'node', 'hybrid', 'discrete', 'fun',
             'static'),
         arrow: ($) => choice(
             '->', '-A->', '-C->', '-D->',
@@ -852,10 +857,11 @@ module.exports = grammar({
             '-AS->'),
 
         // shamelessly stolen and adapted from (tree-sitter-c/grammar.js)[https://github.com/tree-sitter/tree-sitter-c/blob/master/grammar.js]
-        comment: ($) => token(seq('(*',
-            /[^*]*\*+([^)*][^*]*\*+)*/,
-            ')'
-        )),
+        comment: ($) => token(
+            seq('(*',
+                /[^*]*\*+([^)*][^*]*\*+)*/, ')'
+            )
+        ),
 
     }
 });
@@ -933,11 +939,9 @@ function automaton_handler(rule_name) {
             seq(_then_cont($),
                 _emission($), $._state),
             seq(_until_unless($),
-                _escape_list(
-                    $)),
+                _escape_list($)),
             seq('until', _escape_list($),
-                'unless', _escape_list(
-                    $))
+                'unless', _escape_list($))
         ));
 }
 

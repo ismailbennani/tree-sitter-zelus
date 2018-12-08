@@ -115,10 +115,14 @@ Simple expressions: constructor
 ==================================
 
 let x = Dummy
+let x = Dummy.Dummy
 
 ---
 
-(source_file (let_declaration (identifier) (constructor)))
+(source_file
+  (let_declaration (identifier) (constructor))
+  (let_declaration (identifier) (constructor))
+)
 
 ==================================
 Simple expressions: identifier
