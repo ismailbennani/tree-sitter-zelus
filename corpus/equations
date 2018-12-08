@@ -65,8 +65,8 @@ let hybrid f x = () where
 	 (kind) (fun_name) (identifier)
 	 (automaton_equation
 		(constructor) (eq_equation (pattern (identifier)) (integer))
-		 (let_list (eq_equation (pattern (identifier)) (integer)))
-		 (local_list (identifier)  (integer))
+		 (one_let (eq_equation (pattern (identifier)) (integer)))
+		 (one_local (identifier)  (integer))
 		 (eq_equation (pattern (identifier)) (integer)) (constructor) (integer)
 		 (constructor))
 ))
@@ -189,12 +189,10 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(do_equation
-		 (let_list (eq_equation (pattern (identifier)) (integer)))
-		 (local_list
-			(identifier)
-			(identifier)  (integer)
-			(identifier)  (char)
-		 )
+		 (one_let (eq_equation (pattern (identifier)) (integer)))
+		 (one_local (identifier))
+		 (one_local (identifier) (integer))
+		 (one_local (identifier) (char))
 		)
 ))
 
@@ -220,8 +218,8 @@ let hybrid f x = () where
 		 (forall_equation (identifier)  (integer) (integer)
 			  (identifier) (integer)
 			  (identifier) (identifier)
-		 (let_list (eq_equation (pattern (identifier)) (integer)))
-		 (local_list (identifier) (identifier))
+		 (one_let (eq_equation (pattern (identifier)) (integer)))
+		 (one_local (identifier)) (one_local (identifier))
 			(eq_equation (pattern (identifier)) (integer))
 			 (last_equation (identifier) (integer))
 		)

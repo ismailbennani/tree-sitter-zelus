@@ -425,7 +425,7 @@ let x =
 
 (source_file (let_declaration
 	 (identifier)
-     (local_list (identifier))
+     (one_local (identifier))
      (eq_equation (pattern (identifier)) (integer))
 ))
 
