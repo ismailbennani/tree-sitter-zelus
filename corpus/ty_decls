@@ -1,0 +1,187 @@
+==================================
+Simple type declaration
+==================================
+
+type some_type
+
+---
+
+(source_file
+     (ty_name))
+
+==================================
+Parametrized simple type declaration
+==================================
+
+type 'ab dummy
+
+---
+
+(source_file
+     (type_var) (ty_name))
+
+==================================
+Parametrized simple type declaration 2
+==================================
+
+type 'a, 'b dummy
+
+---
+
+(source_file
+     (type_var) (type_var) (ty_name))
+
+==================================
+Sum type declaration
+==================================
+
+type dummy = Const1 | Const2
+
+---
+
+(source_file
+     (ty_name) (constructor) (constructor))
+
+==================================
+Bad sum type declaration
+==================================
+
+type dummy = const1 | Const2
+
+---
+
+(source_file
+     (ty_name) (ERROR (ty_name (identifier))) (constructor))
+
+==================================
+Valued sum type declaration
+==================================
+
+type 'a dummy = Const1 of 'a | Const2 of bool
+
+---
+
+(source_file
+
+    (type_var)
+    (ty_name)
+    (constructor)  (type_var)
+    (constructor)  (ty_name (identifier)))
+
+==================================
+Record type declaration
+==================================
+
+type dummy = { x : 'a; y: int}
+
+---
+
+(source_file
+
+    (ty_name)
+    (identifier) (type_var)
+    (identifier) (ty_name (identifier)))
+
+==================================
+Bad record type declaration
+==================================
+
+type dummy = { x : 'a y: int}
+
+---
+
+(source_file
+
+    (ty_name)
+	(identifier) (type_var)
+    (ty_name (identifier)) (ERROR) (ty_name (identifier)))
+
+==================================
+Type expression declaration
+==================================
+
+type dummy = some_ty * 'a
+
+---
+
+(source_file
+
+    (ty_name)
+    (ty_name (identifier))
+    (type_var))
+
+==================================
+Type expression declaration 2
+==================================
+
+type dummy = some_ty -> 'a
+
+---
+
+(source_file
+
+    (ty_name)
+    (ty_name (identifier))
+    (arrow)
+    (type_var))
+
+==================================
+Type expression declaration 3
+==================================
+
+type dummy = (some_ty : 'a -A-> smthg * smthg)
+
+---
+
+(source_file
+
+    (ty_name)
+    (identifier)
+    (type_var)
+    (arrow)
+    (ty_name (identifier)) (ty_name (identifier)))
+
+==================================
+External type
+==================================
+
+type dummy = int * 'a * float Dummy.some_ty
+
+---
+
+(source_file
+
+    (ty_name)
+    (ty_name (identifier))
+    (type_var)
+    (ty_name (identifier))
+    (ty_name (constructor) (identifier)))
+
+==================================
+Array type
+==================================
+
+type dummy = 'a[5]
+
+---
+
+(source_file
+
+    (ty_name)
+    (type_var)
+    (integer))
+
+==================================
+Array type with size expression
+==================================
+
+type dummy = 'a[5 + a]
+
+---
+
+(source_file
+
+    (ty_name)
+    (type_var)
+    (integer)
+    (identifier))

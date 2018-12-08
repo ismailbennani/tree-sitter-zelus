@@ -1,0 +1,30 @@
+{
+  "name": "tree-sitter-zelus",
+  "version": "1.5.3",
+  "description": "A parser for the synchronous hybrid language Zelus (http://zelus.di.ens.fr)",
+  "main": "index.js",
+  "scripts": {
+    "install": "prebuild-install || node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/ismailbennani/tree-sitter-zelus"
+  },
+  "keywords": [
+    "parser",
+    "zelus"
+  ],
+  "author": "Ismail Bennani",
+  "license": "MIT",
+  "dependencies": {
+    "babel-types": "^6.26.0",
+    "nan": "^2.11.1"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.13.13"
+  },
+  "script": {
+    "install": "node-gyp rebuild",
+    "build": "node-gyp build"
+  }
+}

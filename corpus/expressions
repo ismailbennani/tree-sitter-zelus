@@ -1,0 +1,442 @@
+==================================
+Integers
+==================================
+
+let x = 748
+
+let x = 0xA
+let x = 0o3
+let x = 0b1
+
+---
+
+(source_file
+     (let_declaration (identifier) (integer))
+     (let_declaration (identifier) (integer))
+     (let_declaration (identifier) (integer))
+     (let_declaration (identifier) (integer)))
+
+==================================
+Floats
+==================================
+
+let x = 0.
+let x = 0.039
+let x = 0.30e52
+let x = 0.E-7
+
+---
+
+(source_file
+     (let_declaration (identifier) (float))
+     (let_declaration (identifier) (float))
+     (let_declaration (identifier) (float))
+     (let_declaration (identifier) (float)))
+
+==================================
+Strings
+==================================
+
+let x = ""
+let x = "dummy"
+let x = "dummy\"escaped"
+let x = "dummy" + "separated"
+let x = "dum
+my"
+
+---
+
+(source_file
+     (let_declaration (identifier) (string))
+     (let_declaration (identifier) (string))
+     (let_declaration (identifier) (string (escape_sequence)))
+     (let_declaration (identifier) (string) (infx) (string))
+     (let_declaration (identifier) (string (ERROR (identifier)))))
+
+==================================
+Chars
+==================================
+
+let x = 'a'
+let x = '\n'
+let x = '\''
+let x = '\\'
+let x = '\031'
+let x = '\n' '\\'
+let x = ''
+
+---
+
+(source_file
+	 (let_declaration (identifier) (char))
+   (let_declaration (identifier) (char))
+   (let_declaration (identifier) (char))
+   (let_declaration (identifier) (char))
+   (let_declaration (identifier) (char))
+   (let_declaration (identifier) (char) (char))
+   (ERROR  (identifier) (UNEXPECTED '\n'))
+)
+
+==================================
+Chars 2
+==================================
+
+let x = '\0'
+
+---
+
+(source_file (ERROR  (identifier) (UNEXPECTED '''))
+)
+
+==================================
+Simple expressions: unit
+==================================
+
+let x = ()
+
+---
+
+(source_file  (let_declaration (identifier)))
+
+==================================
+Simple expressions: nil
+==================================
+
+let x = []
+
+---
+
+(source_file  (let_declaration (identifier)))
+
+==================================
+Simple expressions: constructor
+==================================
+
+let x = Dummy
+
+---
+
+(source_file (let_declaration (identifier) (constructor)))
+
+==================================
+Simple expressions: identifier
+==================================
+
+let x = dummy
+
+---
+
+(source_file (let_declaration  (identifier) (identifier)))
+
+
+==================================
+Simple expressions: external identifier
+==================================
+
+let x = Dummy.dummy
+
+---
+
+(source_file (let_declaration  (identifier) (constructor) (identifier)))
+
+==================================
+Simple expressions: sequence
+==================================
+
+let x = 249; 3
+
+---
+
+(source_file (let_declaration  (identifier) (integer) (integer)))
+
+==================================
+Simple expressions: paren
+==================================
+
+let x = (249; some_val)
+
+---
+
+(source_file (let_declaration  (identifier) (integer) (identifier)))
+
+==================================
+Simple expressions: type
+==================================
+let x = (349 : some_ty)
+
+---
+
+(source_file (let_declaration  (identifier) (integer) (ty_name (identifier))))
+
+==================================
+Simple expressions: list
+==================================
+
+let x = [240; some_expr]
+
+---
+
+(source_file (let_declaration  (identifier) (integer) (identifier)))
+
+==================================
+Simple expressions: last
+==================================
+
+let x = last y
+
+---
+
+(source_file (let_declaration  (identifier)  (identifier)))
+
+==================================
+Simple expressions: record
+==================================
+
+let x = { x = 2; Some_Module.y = Dummy.dummy }
+
+---
+
+(source_file (let_declaration
+     (identifier) (identifier) (integer)
+                      (constructor) (identifier) (constructor) (identifier)))
+
+==================================
+Expression: init
+==================================
+
+let x = init
+
+---
+
+(source_file (let_declaration  (identifier) ))
+
+==================================
+Expression: tuple
+==================================
+
+let x = 1,2
+
+---
+
+(source_file (let_declaration  (identifier) (integer) (integer)))
+
+==================================
+Expression: fby
+==================================
+
+let x = 1 fby  2
+
+---
+
+(source_file (let_declaration
+     (identifier) (integer) (infx) (integer)))
+
+==================================
+Expression: app
+==================================
+
+let x = f   y
+
+---
+
+(source_file (let_declaration
+     (identifier) (identifier) (identifier)))
+
+==================================
+Expression: run
+==================================
+
+let x = run f  g x
+
+---
+
+(source_file (let_declaration
+   (identifier)
+  (prfx) (identifier) (identifier) (identifier)))
+
+==================================
+Expression: infx kwd
+==================================
+
+let x = y mod z
+
+---
+
+(source_file (let_declaration
+   (identifier)
+  (identifier) (infx) (identifier)))
+
+==================================
+Expression: infx sym
+==================================
+
+let x = y == z
+
+---
+
+(source_file (let_declaration
+   (identifier)
+  (identifier) (infx) (identifier)))
+
+==================================
+Expression: update
+==================================
+
+let x = { e with x = 3 }
+
+---
+
+(source_file (let_declaration
+     (identifier) (identifier)  (identifier) (integer)))
+
+==================================
+Expression: slice
+==================================
+
+let x = e{5 .. 6}
+
+---
+
+(source_file (let_declaration
+     (identifier) (identifier) (integer) (integer)))
+
+==================================
+Expression: concat
+==================================
+
+let x = {5 |6}
+
+---
+
+(source_file (let_declaration  (identifier) (integer) (integer)))
+
+==================================
+Expression: access
+==================================
+
+let x = f.(x)
+
+---
+
+(source_file (let_declaration  (identifier) (identifier) (identifier)))
+
+==================================
+Expression: record access
+==================================
+
+let x = x.Dummy.x
+
+---
+
+(source_file (let_declaration
+     (identifier)
+	(identifier) (constructor) (identifier)))
+
+==================================
+Expression: let
+==================================
+
+let x = let rec x=5 in x
+
+---
+
+(source_file (let_declaration
+	 (identifier) (let_expression (eq_equation (pattern (identifier)) (integer))
+	 (identifier))))
+
+==================================
+Expression: period
+==================================
+
+let x = period(5)
+
+---
+
+(source_file (let_declaration
+	 (identifier)  (integer)
+))
+
+==================================
+Expression: match
+==================================
+
+let x =
+  match y with 0 -> () | _ -> ()
+
+---
+
+(source_file (let_declaration
+	 (identifier)
+     (match_expression (identifier)  (pattern (integer)) (pattern))
+))
+
+==================================
+Expression: present init
+==================================
+
+let x =
+  present z -> () init ()
+
+---
+
+(source_file (let_declaration
+	 (identifier)
+     (present_expression (identifier))
+))
+
+==================================
+Expression: present else
+==================================
+
+let x =
+  present z -> () else ()
+
+---
+
+(source_file (let_declaration
+	 (identifier)
+     (present_expression (identifier))
+))
+
+==================================
+Expression: reset
+==================================
+
+let x =
+  reset y every 0
+
+---
+
+(source_file (let_declaration
+	 (identifier)
+     (reset_expression (identifier) (integer))
+))
+
+==================================
+Expression: do in
+==================================
+
+let x =
+  local z
+  do x = 5 in
+  ()
+
+---
+
+(source_file (let_declaration
+	 (identifier)
+     (local_list (identifier))
+     (eq_equation (pattern (identifier)) (integer))
+))
+
+==================================
+Expression: if then else
+==================================
+
+let x = if u then () else ()
+
+---
+
+(source_file (let_declaration
+    (identifier) (if_expression (identifier) (else_expression))
+))

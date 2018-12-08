@@ -1,0 +1,323 @@
+==================================
+Simple equation: automaton
+==================================
+
+let hybrid f x = () where
+	automaton
+		| X -> do x = 5 done
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	 	(automaton_equation
+			(constructor) (eq_equation (pattern (identifier)) (integer)))
+))
+
+==================================
+Simple equation: automaton 2
+==================================
+
+let hybrid f x = () where
+	automaton
+		| X -> do x = 5 then S
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	 	(automaton_equation
+			(constructor) (eq_equation (pattern (identifier)) (integer))  (constructor))
+))
+
+==================================
+Simple equation: automaton 3
+==================================
+
+let hybrid f x = () where
+	automaton
+		| X -> do x = 5 then do emit x = () in S(0)
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	 	(automaton_equation
+			(constructor) (eq_equation (pattern (identifier)) (integer))
+		  	(emit_equation (identifier)) (constructor) (integer))
+))
+
+==================================
+Simple equation: automaton 4
+==================================
+
+let hybrid f x = () where
+	automaton
+		| X -> do x = 5 then
+			let x = 5 in
+			local z init 0 in
+			do x = 5 in S(0)
+	init S
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	 (automaton_equation
+		(constructor) (eq_equation (pattern (identifier)) (integer))
+		 (let_list (eq_equation (pattern (identifier)) (integer)))
+		 (local_list (identifier)  (integer))
+		 (eq_equation (pattern (identifier)) (integer)) (constructor) (integer)
+		 (constructor))
+))
+
+==================================
+Simple equation: match
+==================================
+
+let hybrid f x = () where
+	match x with
+	| Dummy -> do done
+	end
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+		 (match_equation
+		 	(identifier)
+				(pattern (constructor)) (do_equation))
+		))
+
+==================================
+Simple equation: if then
+==================================
+
+let hybrid f x = () where
+	if x then do done
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+		 (if_equation (identifier) (do_equation))))
+
+==================================
+Simple equation: if then else
+==================================
+
+let hybrid f x = () where
+	if x then do done
+	else do done
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+		 (if_equation (identifier) (do_equation)
+		  (else_equation (do_equation)))))
+
+==================================
+Simple equation: present
+==================================
+
+let hybrid f x = () where
+	present
+		  x -> do done
+		| up y -> do done
+	end
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	 	(present_equation
+			(identifier) (do_equation)
+			 (identifier) (do_equation)
+		)
+))
+
+==================================
+Simple equation: present else
+==================================
+
+let hybrid f x = () where
+	present
+		  x -> do done
+		| up y -> do done
+	else do done
+	end
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	 	(present_equation
+			(identifier) (do_equation)
+			 (identifier) (do_equation)
+			(do_equation)
+		)
+))
+
+==================================
+Simple equation: reset every
+==================================
+
+let hybrid f x = () where
+	reset x = 5
+	every 5
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	 	(reset_equation
+		 (eq_equation (pattern (identifier)) (integer))
+		 (integer))))
+
+==================================
+Simple equation: let local
+==================================
+
+let hybrid f x = () where
+	let x = 5 in
+	local y, x init 0, z default 's'
+	do done
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	 	(do_equation
+		 (let_list (eq_equation (pattern (identifier)) (integer)))
+		 (local_list
+			(identifier)
+			(identifier)  (integer)
+			(identifier)  (char)
+		 )
+		)
+))
+
+==================================
+Equation: forall
+==================================
+
+let hybrid f x = () where
+	forall x in 3 .. 5, y in 5, z out q
+	let k = 3 in
+	local r,b
+	do
+		l = 4
+	initialize
+		last x = 5
+	done
+
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+		 (forall_equation (identifier)  (integer) (integer)
+			  (identifier) (integer)
+			  (identifier) (identifier)
+		 (let_list (eq_equation (pattern (identifier)) (integer)))
+		 (local_list (identifier) (identifier))
+			(eq_equation (pattern (identifier)) (integer))
+			 (last_equation (identifier) (integer))
+		)
+))
+
+==================================
+Equation: eq
+==================================
+
+let hybrid f x = () where
+	y = 5 and z += 6
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+		(eq_equation (pattern (identifier)) (integer))
+		(eq_equation (pattern (identifier)) (integer))
+))
+
+==================================
+Equation: period
+==================================
+
+let hybrid f x = () where
+	period a = (1. | 2.)
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	 (period_equation (pattern (identifier)) (float) (float))
+))
+
+==================================
+Equation: der
+==================================
+
+let hybrid f x = () where
+	der x = 1
+	init 0
+	reset
+		  z -> 0
+	    | up(5) -> 1
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	 (der_equation (identifier) (integer)
+	 (integer)
+	 (identifier) (integer)
+		   (integer) (integer))
+))
+
+==================================
+Equation: next
+==================================
+
+let hybrid f x = () where
+	next x = 5
+	init 5;6
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	 (next_equation (identifier) (integer)
+	 (integer) (integer))
+))
+
+==================================
+Equation: emit
+==================================
+
+let hybrid f x = () where
+	emit z = 3
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	 (emit_equation (identifier) (integer))
+))
+
+==================================
+Equation: before
+==================================
+
+let hybrid f x = () where
+	x = 5 before y = 5
+
+---
+
+(source_file (fun_declaration
+	 (kind) (fun_name) (identifier)
+	(eq_equation (pattern (identifier)) (integer))
+	(eq_equation (pattern (identifier)) (integer))
+))

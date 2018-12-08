@@ -1,0 +1,82 @@
+==================================
+Heater
+==================================
+
+let hybrid heater(c, alpha, beta, temp_ext, temp0, u) = temp where
+    rec der temp =
+          if u then alpha *. (c -. temp)
+	  else beta *. (temp_ext -. temp) init temp0
+
+---
+
+(source_file
+   (fun_declaration (kind) (fun_name)
+      (pattern (pattern (pattern (pattern (pattern
+                        (pattern (identifier))
+                        (pattern (identifier)))
+                        (pattern (identifier)))
+                        (pattern (identifier)))
+                        (pattern (identifier)))
+                        (pattern (identifier)))
+               (identifier)
+     (der_equation (identifier)
+     (if_expression (identifier)
+        (identifier) (infx) (identifier) (infx) (identifier)
+     (else_expression
+        (identifier) (infx) (identifier) (infx) (identifier))) (identifier)))
+)
+
+==================================
+Controller
+==================================
+
+let hybrid controller(low, high, temp) = u where
+    rec u = present
+            | up(low -. temp) -> true
+            | up(temp -. high) -> false
+            init (temp < high)
+
+---
+
+(source_file
+   (fun_declaration (kind) (fun_name)
+            (pattern (pattern
+                      (pattern (identifier))
+                      (pattern (identifier)))
+                      (pattern (identifier)))
+             (identifier)
+   (eq_equation (pattern (identifier))
+    (present_expression
+     (identifier) (infx) (identifier) (bool)
+     (identifier) (infx) (identifier) (bool)
+     (identifier) (infx) (identifier))))
+)
+
+==================================
+System
+==================================
+
+let hybrid system(reference) = (u, temp) where
+    rec u =
+        controller(reference -. low, reference +. high, temp)
+    and temp =
+        heater(c, alpha, beta, 0.0, 0.0, u)
+
+---
+
+(source_file
+   (fun_declaration (kind) (fun_name)
+                      (pattern (identifier))
+            (identifier) (identifier)
+     (eq_equation (pattern (identifier))
+        (identifier) (identifier) (infx) (identifier)
+                     (identifier) (infx) (identifier)
+                     (identifier))
+     (eq_equation (pattern (identifier))
+        (identifier) (identifier)
+                     (identifier)
+                     (identifier)
+                     (float)
+                     (float)
+                     (identifier)))
+)

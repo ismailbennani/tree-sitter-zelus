@@ -1,0 +1,30 @@
+==================================
+Open
+==================================
+
+open Hey_'3
+
+---
+
+(source_file  (constructor))
+
+==================================
+Type
+==================================
+
+type hey_'3
+
+---
+
+(source_file  (ty_name))
+
+==================================
+Val
+==================================
+
+val x : some_ty * Dummy.some_other_ty
+
+---
+
+(source_file  (val_declaration
+  (identifier) (ty_name (identifier)) (ty_name (constructor) (identifier))))
