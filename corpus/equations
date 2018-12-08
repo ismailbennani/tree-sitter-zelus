@@ -11,8 +11,8 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(automaton_equation
-			(constructor)
-				(block_equation (eq_equation (pattern (identifier)) (integer))))
+			(automaton_handler_equation (constructor)
+				(block_equation (eq_equation (pattern (identifier)) (integer)))))
 ))
 
 ==================================
@@ -28,10 +28,10 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(automaton_equation
-			(constructor)
+			(automaton_handler_equation (constructor)
 				(block_equation
 					(eq_equation (pattern (identifier)) (integer)))
-					(constructor))
+					(constructor)))
 ))
 
 ==================================
@@ -47,9 +47,9 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(automaton_equation
-			(constructor)
+			(automaton_handler_equation (constructor)
 				(block_equation (eq_equation (pattern (identifier)) (integer)))
-		  	(block_equation (emit_equation (identifier))) (constructor) (integer))
+		  	(block_equation (emit_equation (identifier))) (constructor) (integer)))
 ))
 
 ==================================
@@ -69,12 +69,12 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 (automaton_equation
-		(constructor)
+		(automaton_handler_equation (constructor)
 		 (block_equation (eq_equation (pattern (identifier)) (integer)))
 		 (one_let (eq_equation (pattern (identifier)) (integer)))
 		 (one_local (identifier)  (integer))
 		 (block_equation (eq_equation (pattern (identifier)) (integer)))
-		  	(constructor) (integer)
+		  	(constructor) (integer))
 		 (constructor))
 ))
 
@@ -93,7 +93,7 @@ let hybrid f x = () where
 	 (kind) (fun_name) (identifier)
 		 (match_equation
 		 	(identifier)
-				(pattern (constructor)) (do_done_block))
+				(match_handler_equation (pattern (constructor)) (do_done_block)))
 		))
 
 ==================================
@@ -139,8 +139,8 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(present_equation
-			(identifier) (do_done_block)
-			 (identifier) (do_done_block)
+			(present_handler_equation (identifier) (do_done_block))
+			(present_handler_equation (identifier) (do_done_block))
 		)
 ))
 
@@ -160,8 +160,8 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(present_equation
-			(identifier) (do_done_block)
-			 (identifier) (do_done_block)
+			(present_handler_equation (identifier) (do_done_block))
+			(present_handler_equation (identifier) (do_done_block))
 			(do_done_block)
 		)
 ))
@@ -278,8 +278,8 @@ let hybrid f x = () where
 	 (kind) (fun_name) (identifier)
 	 (der_equation (identifier) (integer)
 	 (integer)
-	 (identifier) (integer)
-		   (integer) (integer))
+	 		(der_reset_handler (identifier) (integer))
+	 		(der_reset_handler (integer) (integer)))
 ))
 
 ==================================

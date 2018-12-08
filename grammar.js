@@ -163,8 +163,7 @@ module.exports = grammar({
             seq(
                 'present',
                 optional('|'),
-                present_handlers($._scondpat, $
-                    ._expression),
+                $._present_handlers_expression,
                 optional(choice(
                     seq('init',
                         $._expression),
@@ -297,17 +296,71 @@ module.exports = grammar({
         ),
 
 
-        _automaton_handlers_equation: automaton_handlers(
-            '_block_optional_equation'),
-        _automaton_handlers_expression: automaton_handlers(
+        automaton_handler_equation: automaton_handler(
+            '_block_optional_equation'
+        ),
+        automaton_handler_expression: automaton_handler(
             'block_expression'
         ),
-        _match_handlers_block_eq: match_handlers(
+        _automaton_handlers_equation: ($) => prec.right(
+            PREC.seq, repeat1(
+                $.automaton_handler_equation
+            )),
+        _automaton_handlers_expression: ($) =>
+            prec.right(
+                PREC.seq, repeat1(
+                    $.automaton_handler_expression
+                )
+            ),
+        match_handler_equation: match_handler(
             '_block_of_equation'
         ),
-        _match_handlers_expression: match_handlers(
+        match_handler_expression: match_handler(
             '_expression'
         ),
+        _match_handlers_equation: ($) => prec.right(
+            PREC.match,
+            separated_nonempty_list('|',
+                $.match_handler_equation)
+        ),
+        _match_handlers_expression: ($) => prec.right(
+            PREC.match,
+            separated_nonempty_list('|',
+                $.match_handler_expression)
+        ),
+        present_handler_equation: ($) =>
+            present_handler(
+                $._scondpat,
+                $._block_of_equation
+            ),
+        present_handler_expression: ($) =>
+            present_handler(
+                $._scondpat,
+                $._expression
+            ),
+        _present_handlers_equation: ($) =>
+            prec.right(
+                PREC.match,
+                separated_nonempty_list('|',
+                    $.present_handler_equation)
+            ),
+        _present_handlers_expression: ($) =>
+            prec.right(
+                PREC.match,
+                separated_nonempty_list('|',
+                    $.present_handler_expression)
+            ),
+        der_reset_handler: ($) =>
+            present_handler(
+                $._scondpat,
+                $._expression
+            ),
+        _der_reset_handlers: ($) =>
+            prec.right(
+                PREC.match,
+                separated_nonempty_list('|',
+                    $.der_reset_handler)
+            ),
 
         block_equation: ($) => seq(
             'do', $._equation_list
@@ -342,9 +395,7 @@ module.exports = grammar({
             seq(
                 'present',
                 optional('|'),
-                present_handlers($._scondpat,
-                    $
-                    ._block_of_equation),
+                $._present_handlers_equation,
                 optional(
                     seq(
                         'else',
@@ -375,7 +426,7 @@ module.exports = grammar({
                 $._seq_expression,
                 'with',
                 optional('|'),
-                $._match_handlers_block_eq,
+                $._match_handlers_equation,
                 optional('end')
             )
         ),
@@ -420,8 +471,7 @@ module.exports = grammar({
                 seq(
                     'reset',
                     optional('|'),
-                    present_handlers($._scondpat,
-                        $._expression)
+                    $._der_reset_handlers
                 )
             )
         ),
@@ -652,11 +702,15 @@ module.exports = grammar({
             seq(
                 $._ide,
                 'in',
-                $._simple_expression,
-                '..',
-                $._simple_expression
+                $._range_pattern
             )
         ),
+
+        _range_pattern: ($) => prec(PREC.dot, seq(
+            $._simple_expression,
+            '..',
+            $._simple_expression
+        )),
 
 
         _state: ($) => choice(
@@ -811,11 +865,10 @@ function label_list(rule) {
             ';'));
 }
 
-function present_handlers(pattern, rule) {
-    return prec.right(PREC.match,
-        separated_nonempty_list('|', seq(
-            pattern, '->',
-            rule))
+function present_handler(pattern, rule) {
+    return seq(
+        pattern, '->',
+        rule
     );
 }
 
@@ -827,7 +880,7 @@ function block(rule_name) {
     );
 }
 
-function automaton_handlers(rule_name) {
+function automaton_handler(rule_name) {
     function _emission($) {
         return choice(
             seq($.one_let, 'in', optional($._let_list)),
@@ -859,7 +912,7 @@ function automaton_handlers(rule_name) {
             ));
     }
 
-    return ($) => prec.right(PREC.seq, repeat1(seq(
+    return ($) => seq(
         $._state_pat,
         '->',
         block(rule_name)($),
@@ -874,10 +927,10 @@ function automaton_handlers(rule_name) {
             seq('until', _escape_list($),
                 'unless', _escape_list(
                     $))
-        ))));
+        ));
 }
 
-function match_handlers(rule_name) {
+function match_handler(rule_name) {
     return ($) =>
-        present_handlers($.pattern, $[rule_name]);
+        present_handler($.pattern, $[rule_name]);
 }

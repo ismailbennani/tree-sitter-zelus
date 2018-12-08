@@ -367,7 +367,9 @@ let x =
 
 (source_file (let_declaration
 	 (identifier)
-     (match_expression (identifier)  (pattern (integer)) (pattern))
+     (match_expression (identifier)
+        (match_handler_expression (pattern (integer)))
+        (match_handler_expression (pattern)))
 ))
 
 ==================================
@@ -381,7 +383,7 @@ let x =
 
 (source_file (let_declaration
 	 (identifier)
-     (present_expression (identifier))
+     (present_expression (present_handler_expression (identifier)))
 ))
 
 ==================================
@@ -395,7 +397,7 @@ let x =
 
 (source_file (let_declaration
 	 (identifier)
-     (present_expression (identifier))
+     (present_expression (present_handler_expression (identifier)))
 ))
 
 ==================================

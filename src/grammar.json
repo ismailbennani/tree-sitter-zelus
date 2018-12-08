@@ -690,59 +690,8 @@
             ]
           },
           {
-            "type": "PREC_RIGHT",
-            "value": 2,
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "_scondpat"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "->"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_expression"
-                    }
-                  ]
-                },
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "STRING",
-                        "value": "|"
-                      },
-                      {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "SYMBOL",
-                            "name": "_scondpat"
-                          },
-                          {
-                            "type": "STRING",
-                            "value": "->"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "_expression"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
+            "type": "SYMBOL",
+            "name": "_present_handlers_expression"
           },
           {
             "type": "CHOICE",
@@ -1327,21 +1276,56 @@
         }
       ]
     },
-    "_automaton_handlers_equation": {
-      "type": "PREC_RIGHT",
-      "value": 3,
-      "content": {
-        "type": "REPEAT1",
-        "content": {
+    "automaton_handler_equation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_state_pat"
+        },
+        {
+          "type": "STRING",
+          "value": "->"
+        },
+        {
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_state_pat"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_let_list"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             },
             {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_local_list"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_block_optional_equation"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
               "type": "STRING",
-              "value": "->"
+              "value": "done"
             },
             {
               "type": "SEQ",
@@ -1350,11 +1334,34 @@
                   "type": "CHOICE",
                   "members": [
                     {
-                      "type": "SYMBOL",
-                      "name": "_let_list"
+                      "type": "STRING",
+                      "value": "then"
                     },
                     {
-                      "type": "BLANK"
+                      "type": "STRING",
+                      "value": "continue"
+                    }
+                  ]
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_state"
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "then"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "continue"
                     }
                   ]
                 },
@@ -1362,79 +1369,36 @@
                   "type": "CHOICE",
                   "members": [
                     {
-                      "type": "SYMBOL",
-                      "name": "_local_list"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_block_optional_equation"
-                }
-              ]
-            },
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "done"
-                },
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "CHOICE",
+                      "type": "SEQ",
                       "members": [
                         {
-                          "type": "STRING",
-                          "value": "then"
+                          "type": "SYMBOL",
+                          "name": "one_let"
                         },
                         {
                           "type": "STRING",
-                          "value": "continue"
+                          "value": "in"
+                        },
+                        {
+                          "type": "CHOICE",
+                          "members": [
+                            {
+                              "type": "SYMBOL",
+                              "name": "_let_list"
+                            },
+                            {
+                              "type": "BLANK"
+                            }
+                          ]
                         }
                       ]
                     },
                     {
-                      "type": "SYMBOL",
-                      "name": "_state"
-                    }
-                  ]
-                },
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "STRING",
-                          "value": "then"
-                        },
-                        {
-                          "type": "STRING",
-                          "value": "continue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "CHOICE",
+                      "type": "SEQ",
                       "members": [
                         {
                           "type": "SEQ",
                           "members": [
-                            {
-                              "type": "SYMBOL",
-                              "name": "one_let"
-                            },
-                            {
-                              "type": "STRING",
-                              "value": "in"
-                            },
                             {
                               "type": "CHOICE",
                               "members": [
@@ -1446,715 +1410,144 @@
                                   "type": "BLANK"
                                 }
                               ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "SEQ",
-                          "members": [
+                            },
                             {
-                              "type": "SEQ",
+                              "type": "CHOICE",
                               "members": [
                                 {
-                                  "type": "CHOICE",
-                                  "members": [
-                                    {
-                                      "type": "SYMBOL",
-                                      "name": "_let_list"
-                                    },
-                                    {
-                                      "type": "BLANK"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "CHOICE",
-                                  "members": [
-                                    {
-                                      "type": "SYMBOL",
-                                      "name": "_local_list"
-                                    },
-                                    {
-                                      "type": "BLANK"
-                                    }
-                                  ]
-                                },
-                                {
                                   "type": "SYMBOL",
-                                  "name": "_block_optional_equation"
+                                  "name": "_local_list"
+                                },
+                                {
+                                  "type": "BLANK"
                                 }
                               ]
                             },
                             {
-                              "type": "STRING",
-                              "value": "in"
+                              "type": "SYMBOL",
+                              "name": "_block_optional_equation"
                             }
                           ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_state"
-                    }
-                  ]
-                },
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "STRING",
-                          "value": "until"
                         },
                         {
                           "type": "STRING",
-                          "value": "unless"
+                          "value": "in"
                         }
                       ]
-                    },
-                    {
-                      "type": "PREC_LEFT",
-                      "value": 3,
-                      "content": {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "SEQ",
-                                "members": [
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_scondpat"
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "STRING",
-                                        "value": "then"
-                                      },
-                                      {
-                                        "type": "STRING",
-                                        "value": "continue"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_state"
-                                  }
-                                ]
-                              },
-                              {
-                                "type": "SEQ",
-                                "members": [
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_scondpat"
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "STRING",
-                                        "value": "then"
-                                      },
-                                      {
-                                        "type": "STRING",
-                                        "value": "continue"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "SEQ",
-                                        "members": [
-                                          {
-                                            "type": "SYMBOL",
-                                            "name": "one_let"
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "in"
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_let_list"
-                                              },
-                                              {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "type": "SEQ",
-                                        "members": [
-                                          {
-                                            "type": "SEQ",
-                                            "members": [
-                                              {
-                                                "type": "CHOICE",
-                                                "members": [
-                                                  {
-                                                    "type": "SYMBOL",
-                                                    "name": "_let_list"
-                                                  },
-                                                  {
-                                                    "type": "BLANK"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "type": "CHOICE",
-                                                "members": [
-                                                  {
-                                                    "type": "SYMBOL",
-                                                    "name": "_local_list"
-                                                  },
-                                                  {
-                                                    "type": "BLANK"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_block_optional_equation"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "in"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_state"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "REPEAT",
-                            "content": {
-                              "type": "SEQ",
-                              "members": [
-                                {
-                                  "type": "STRING",
-                                  "value": "else"
-                                },
-                                {
-                                  "type": "CHOICE",
-                                  "members": [
-                                    {
-                                      "type": "SEQ",
-                                      "members": [
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_scondpat"
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "STRING",
-                                              "value": "then"
-                                            },
-                                            {
-                                              "type": "STRING",
-                                              "value": "continue"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_state"
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "SEQ",
-                                      "members": [
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_scondpat"
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "STRING",
-                                              "value": "then"
-                                            },
-                                            {
-                                              "type": "STRING",
-                                              "value": "continue"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "SEQ",
-                                              "members": [
-                                                {
-                                                  "type": "SYMBOL",
-                                                  "name": "one_let"
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "in"
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_let_list"
-                                                    },
-                                                    {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            },
-                                            {
-                                              "type": "SEQ",
-                                              "members": [
-                                                {
-                                                  "type": "SEQ",
-                                                  "members": [
-                                                    {
-                                                      "type": "CHOICE",
-                                                      "members": [
-                                                        {
-                                                          "type": "SYMBOL",
-                                                          "name": "_let_list"
-                                                        },
-                                                        {
-                                                          "type": "BLANK"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "type": "CHOICE",
-                                                      "members": [
-                                                        {
-                                                          "type": "SYMBOL",
-                                                          "name": "_local_list"
-                                                        },
-                                                        {
-                                                          "type": "BLANK"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_block_optional_equation"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "in"
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_state"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
                     }
                   ]
                 },
                 {
-                  "type": "SEQ",
+                  "type": "SYMBOL",
+                  "name": "_state"
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "CHOICE",
                   "members": [
                     {
                       "type": "STRING",
                       "value": "until"
                     },
                     {
-                      "type": "PREC_LEFT",
-                      "value": 3,
-                      "content": {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "SEQ",
-                                "members": [
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_scondpat"
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "STRING",
-                                        "value": "then"
-                                      },
-                                      {
-                                        "type": "STRING",
-                                        "value": "continue"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_state"
-                                  }
-                                ]
-                              },
-                              {
-                                "type": "SEQ",
-                                "members": [
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_scondpat"
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "STRING",
-                                        "value": "then"
-                                      },
-                                      {
-                                        "type": "STRING",
-                                        "value": "continue"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "SEQ",
-                                        "members": [
-                                          {
-                                            "type": "SYMBOL",
-                                            "name": "one_let"
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "in"
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_let_list"
-                                              },
-                                              {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "type": "SEQ",
-                                        "members": [
-                                          {
-                                            "type": "SEQ",
-                                            "members": [
-                                              {
-                                                "type": "CHOICE",
-                                                "members": [
-                                                  {
-                                                    "type": "SYMBOL",
-                                                    "name": "_let_list"
-                                                  },
-                                                  {
-                                                    "type": "BLANK"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "type": "CHOICE",
-                                                "members": [
-                                                  {
-                                                    "type": "SYMBOL",
-                                                    "name": "_local_list"
-                                                  },
-                                                  {
-                                                    "type": "BLANK"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_block_optional_equation"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "in"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_state"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "REPEAT",
-                            "content": {
-                              "type": "SEQ",
-                              "members": [
-                                {
-                                  "type": "STRING",
-                                  "value": "else"
-                                },
-                                {
-                                  "type": "CHOICE",
-                                  "members": [
-                                    {
-                                      "type": "SEQ",
-                                      "members": [
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_scondpat"
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "STRING",
-                                              "value": "then"
-                                            },
-                                            {
-                                              "type": "STRING",
-                                              "value": "continue"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_state"
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "SEQ",
-                                      "members": [
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_scondpat"
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "STRING",
-                                              "value": "then"
-                                            },
-                                            {
-                                              "type": "STRING",
-                                              "value": "continue"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "SEQ",
-                                              "members": [
-                                                {
-                                                  "type": "SYMBOL",
-                                                  "name": "one_let"
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "in"
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_let_list"
-                                                    },
-                                                    {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            },
-                                            {
-                                              "type": "SEQ",
-                                              "members": [
-                                                {
-                                                  "type": "SEQ",
-                                                  "members": [
-                                                    {
-                                                      "type": "CHOICE",
-                                                      "members": [
-                                                        {
-                                                          "type": "SYMBOL",
-                                                          "name": "_let_list"
-                                                        },
-                                                        {
-                                                          "type": "BLANK"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "type": "CHOICE",
-                                                      "members": [
-                                                        {
-                                                          "type": "SYMBOL",
-                                                          "name": "_local_list"
-                                                        },
-                                                        {
-                                                          "type": "BLANK"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_block_optional_equation"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "in"
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_state"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
                       "type": "STRING",
                       "value": "unless"
-                    },
-                    {
-                      "type": "PREC_LEFT",
-                      "value": 3,
-                      "content": {
-                        "type": "SEQ",
+                    }
+                  ]
+                },
+                {
+                  "type": "PREC_LEFT",
+                  "value": 3,
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "CHOICE",
                         "members": [
                           {
-                            "type": "CHOICE",
+                            "type": "SEQ",
                             "members": [
                               {
-                                "type": "SEQ",
+                                "type": "SYMBOL",
+                                "name": "_scondpat"
+                              },
+                              {
+                                "type": "CHOICE",
                                 "members": [
                                   {
-                                    "type": "SYMBOL",
-                                    "name": "_scondpat"
+                                    "type": "STRING",
+                                    "value": "then"
                                   },
                                   {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "STRING",
-                                        "value": "then"
-                                      },
-                                      {
-                                        "type": "STRING",
-                                        "value": "continue"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_state"
+                                    "type": "STRING",
+                                    "value": "continue"
                                   }
                                 ]
                               },
                               {
-                                "type": "SEQ",
+                                "type": "SYMBOL",
+                                "name": "_state"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "_scondpat"
+                              },
+                              {
+                                "type": "CHOICE",
                                 "members": [
                                   {
-                                    "type": "SYMBOL",
-                                    "name": "_scondpat"
+                                    "type": "STRING",
+                                    "value": "then"
                                   },
                                   {
-                                    "type": "CHOICE",
+                                    "type": "STRING",
+                                    "value": "continue"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "SEQ",
                                     "members": [
                                       {
-                                        "type": "STRING",
-                                        "value": "then"
+                                        "type": "SYMBOL",
+                                        "name": "one_let"
                                       },
                                       {
                                         "type": "STRING",
-                                        "value": "continue"
+                                        "value": "in"
+                                      },
+                                      {
+                                        "type": "CHOICE",
+                                        "members": [
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "_let_list"
+                                          },
+                                          {
+                                            "type": "BLANK"
+                                          }
+                                        ]
                                       }
                                     ]
                                   },
                                   {
-                                    "type": "CHOICE",
+                                    "type": "SEQ",
                                     "members": [
                                       {
                                         "type": "SEQ",
                                         "members": [
-                                          {
-                                            "type": "SYMBOL",
-                                            "name": "one_let"
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "in"
-                                          },
                                           {
                                             "type": "CHOICE",
                                             "members": [
@@ -2166,133 +1559,133 @@
                                                 "type": "BLANK"
                                               }
                                             ]
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "type": "SEQ",
-                                        "members": [
+                                          },
                                           {
-                                            "type": "SEQ",
+                                            "type": "CHOICE",
                                             "members": [
                                               {
-                                                "type": "CHOICE",
-                                                "members": [
-                                                  {
-                                                    "type": "SYMBOL",
-                                                    "name": "_let_list"
-                                                  },
-                                                  {
-                                                    "type": "BLANK"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "type": "CHOICE",
-                                                "members": [
-                                                  {
-                                                    "type": "SYMBOL",
-                                                    "name": "_local_list"
-                                                  },
-                                                  {
-                                                    "type": "BLANK"
-                                                  }
-                                                ]
-                                              },
-                                              {
                                                 "type": "SYMBOL",
-                                                "name": "_block_optional_equation"
+                                                "name": "_local_list"
+                                              },
+                                              {
+                                                "type": "BLANK"
                                               }
                                             ]
                                           },
                                           {
-                                            "type": "STRING",
-                                            "value": "in"
+                                            "type": "SYMBOL",
+                                            "name": "_block_optional_equation"
                                           }
                                         ]
+                                      },
+                                      {
+                                        "type": "STRING",
+                                        "value": "in"
                                       }
                                     ]
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_state"
                                   }
                                 ]
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "_state"
                               }
                             ]
-                          },
-                          {
-                            "type": "REPEAT",
-                            "content": {
-                              "type": "SEQ",
+                          }
+                        ]
+                      },
+                      {
+                        "type": "REPEAT",
+                        "content": {
+                          "type": "SEQ",
+                          "members": [
+                            {
+                              "type": "STRING",
+                              "value": "else"
+                            },
+                            {
+                              "type": "CHOICE",
                               "members": [
                                 {
-                                  "type": "STRING",
-                                  "value": "else"
-                                },
-                                {
-                                  "type": "CHOICE",
+                                  "type": "SEQ",
                                   "members": [
                                     {
-                                      "type": "SEQ",
+                                      "type": "SYMBOL",
+                                      "name": "_scondpat"
+                                    },
+                                    {
+                                      "type": "CHOICE",
                                       "members": [
                                         {
-                                          "type": "SYMBOL",
-                                          "name": "_scondpat"
+                                          "type": "STRING",
+                                          "value": "then"
                                         },
                                         {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "STRING",
-                                              "value": "then"
-                                            },
-                                            {
-                                              "type": "STRING",
-                                              "value": "continue"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_state"
+                                          "type": "STRING",
+                                          "value": "continue"
                                         }
                                       ]
                                     },
                                     {
-                                      "type": "SEQ",
+                                      "type": "SYMBOL",
+                                      "name": "_state"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "SEQ",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_scondpat"
+                                    },
+                                    {
+                                      "type": "CHOICE",
                                       "members": [
                                         {
-                                          "type": "SYMBOL",
-                                          "name": "_scondpat"
+                                          "type": "STRING",
+                                          "value": "then"
                                         },
                                         {
-                                          "type": "CHOICE",
+                                          "type": "STRING",
+                                          "value": "continue"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "SEQ",
                                           "members": [
                                             {
-                                              "type": "STRING",
-                                              "value": "then"
+                                              "type": "SYMBOL",
+                                              "name": "one_let"
                                             },
                                             {
                                               "type": "STRING",
-                                              "value": "continue"
+                                              "value": "in"
+                                            },
+                                            {
+                                              "type": "CHOICE",
+                                              "members": [
+                                                {
+                                                  "type": "SYMBOL",
+                                                  "name": "_let_list"
+                                                },
+                                                {
+                                                  "type": "BLANK"
+                                                }
+                                              ]
                                             }
                                           ]
                                         },
                                         {
-                                          "type": "CHOICE",
+                                          "type": "SEQ",
                                           "members": [
                                             {
                                               "type": "SEQ",
                                               "members": [
-                                                {
-                                                  "type": "SYMBOL",
-                                                  "name": "one_let"
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "in"
-                                                },
                                                 {
                                                   "type": "CHOICE",
                                                   "members": [
@@ -2304,72 +1697,1671 @@
                                                       "type": "BLANK"
                                                     }
                                                   ]
-                                                }
-                                              ]
-                                            },
-                                            {
-                                              "type": "SEQ",
-                                              "members": [
+                                                },
                                                 {
-                                                  "type": "SEQ",
+                                                  "type": "CHOICE",
                                                   "members": [
                                                     {
-                                                      "type": "CHOICE",
-                                                      "members": [
-                                                        {
-                                                          "type": "SYMBOL",
-                                                          "name": "_let_list"
-                                                        },
-                                                        {
-                                                          "type": "BLANK"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "type": "CHOICE",
-                                                      "members": [
-                                                        {
-                                                          "type": "SYMBOL",
-                                                          "name": "_local_list"
-                                                        },
-                                                        {
-                                                          "type": "BLANK"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
                                                       "type": "SYMBOL",
-                                                      "name": "_block_optional_equation"
+                                                      "name": "_local_list"
+                                                    },
+                                                    {
+                                                      "type": "BLANK"
                                                     }
                                                   ]
                                                 },
                                                 {
-                                                  "type": "STRING",
-                                                  "value": "in"
+                                                  "type": "SYMBOL",
+                                                  "name": "_block_optional_equation"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "STRING",
+                                              "value": "in"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_state"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "until"
+                },
+                {
+                  "type": "PREC_LEFT",
+                  "value": 3,
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "_scondpat"
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "STRING",
+                                    "value": "then"
+                                  },
+                                  {
+                                    "type": "STRING",
+                                    "value": "continue"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "_state"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "_scondpat"
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "STRING",
+                                    "value": "then"
+                                  },
+                                  {
+                                    "type": "STRING",
+                                    "value": "continue"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "SEQ",
+                                    "members": [
+                                      {
+                                        "type": "SYMBOL",
+                                        "name": "one_let"
+                                      },
+                                      {
+                                        "type": "STRING",
+                                        "value": "in"
+                                      },
+                                      {
+                                        "type": "CHOICE",
+                                        "members": [
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "_let_list"
+                                          },
+                                          {
+                                            "type": "BLANK"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "SEQ",
+                                    "members": [
+                                      {
+                                        "type": "SEQ",
+                                        "members": [
+                                          {
+                                            "type": "CHOICE",
+                                            "members": [
+                                              {
+                                                "type": "SYMBOL",
+                                                "name": "_let_list"
+                                              },
+                                              {
+                                                "type": "BLANK"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "CHOICE",
+                                            "members": [
+                                              {
+                                                "type": "SYMBOL",
+                                                "name": "_local_list"
+                                              },
+                                              {
+                                                "type": "BLANK"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "_block_optional_equation"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "STRING",
+                                        "value": "in"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "_state"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "REPEAT",
+                        "content": {
+                          "type": "SEQ",
+                          "members": [
+                            {
+                              "type": "STRING",
+                              "value": "else"
+                            },
+                            {
+                              "type": "CHOICE",
+                              "members": [
+                                {
+                                  "type": "SEQ",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_scondpat"
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "STRING",
+                                          "value": "then"
+                                        },
+                                        {
+                                          "type": "STRING",
+                                          "value": "continue"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_state"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "SEQ",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_scondpat"
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "STRING",
+                                          "value": "then"
+                                        },
+                                        {
+                                          "type": "STRING",
+                                          "value": "continue"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "SEQ",
+                                          "members": [
+                                            {
+                                              "type": "SYMBOL",
+                                              "name": "one_let"
+                                            },
+                                            {
+                                              "type": "STRING",
+                                              "value": "in"
+                                            },
+                                            {
+                                              "type": "CHOICE",
+                                              "members": [
+                                                {
+                                                  "type": "SYMBOL",
+                                                  "name": "_let_list"
+                                                },
+                                                {
+                                                  "type": "BLANK"
                                                 }
                                               ]
                                             }
                                           ]
                                         },
                                         {
-                                          "type": "SYMBOL",
-                                          "name": "_state"
+                                          "type": "SEQ",
+                                          "members": [
+                                            {
+                                              "type": "SEQ",
+                                              "members": [
+                                                {
+                                                  "type": "CHOICE",
+                                                  "members": [
+                                                    {
+                                                      "type": "SYMBOL",
+                                                      "name": "_let_list"
+                                                    },
+                                                    {
+                                                      "type": "BLANK"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "CHOICE",
+                                                  "members": [
+                                                    {
+                                                      "type": "SYMBOL",
+                                                      "name": "_local_list"
+                                                    },
+                                                    {
+                                                      "type": "BLANK"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "SYMBOL",
+                                                  "name": "_block_optional_equation"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "STRING",
+                                              "value": "in"
+                                            }
+                                          ]
                                         }
                                       ]
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_state"
                                     }
                                   ]
                                 }
                               ]
                             }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "STRING",
+                  "value": "unless"
+                },
+                {
+                  "type": "PREC_LEFT",
+                  "value": 3,
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "_scondpat"
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "STRING",
+                                    "value": "then"
+                                  },
+                                  {
+                                    "type": "STRING",
+                                    "value": "continue"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "_state"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "_scondpat"
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "STRING",
+                                    "value": "then"
+                                  },
+                                  {
+                                    "type": "STRING",
+                                    "value": "continue"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "SEQ",
+                                    "members": [
+                                      {
+                                        "type": "SYMBOL",
+                                        "name": "one_let"
+                                      },
+                                      {
+                                        "type": "STRING",
+                                        "value": "in"
+                                      },
+                                      {
+                                        "type": "CHOICE",
+                                        "members": [
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "_let_list"
+                                          },
+                                          {
+                                            "type": "BLANK"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "SEQ",
+                                    "members": [
+                                      {
+                                        "type": "SEQ",
+                                        "members": [
+                                          {
+                                            "type": "CHOICE",
+                                            "members": [
+                                              {
+                                                "type": "SYMBOL",
+                                                "name": "_let_list"
+                                              },
+                                              {
+                                                "type": "BLANK"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "CHOICE",
+                                            "members": [
+                                              {
+                                                "type": "SYMBOL",
+                                                "name": "_local_list"
+                                              },
+                                              {
+                                                "type": "BLANK"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "_block_optional_equation"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "STRING",
+                                        "value": "in"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "_state"
+                              }
+                            ]
                           }
                         ]
+                      },
+                      {
+                        "type": "REPEAT",
+                        "content": {
+                          "type": "SEQ",
+                          "members": [
+                            {
+                              "type": "STRING",
+                              "value": "else"
+                            },
+                            {
+                              "type": "CHOICE",
+                              "members": [
+                                {
+                                  "type": "SEQ",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_scondpat"
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "STRING",
+                                          "value": "then"
+                                        },
+                                        {
+                                          "type": "STRING",
+                                          "value": "continue"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_state"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "SEQ",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_scondpat"
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "STRING",
+                                          "value": "then"
+                                        },
+                                        {
+                                          "type": "STRING",
+                                          "value": "continue"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "SEQ",
+                                          "members": [
+                                            {
+                                              "type": "SYMBOL",
+                                              "name": "one_let"
+                                            },
+                                            {
+                                              "type": "STRING",
+                                              "value": "in"
+                                            },
+                                            {
+                                              "type": "CHOICE",
+                                              "members": [
+                                                {
+                                                  "type": "SYMBOL",
+                                                  "name": "_let_list"
+                                                },
+                                                {
+                                                  "type": "BLANK"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "SEQ",
+                                          "members": [
+                                            {
+                                              "type": "SEQ",
+                                              "members": [
+                                                {
+                                                  "type": "CHOICE",
+                                                  "members": [
+                                                    {
+                                                      "type": "SYMBOL",
+                                                      "name": "_let_list"
+                                                    },
+                                                    {
+                                                      "type": "BLANK"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "CHOICE",
+                                                  "members": [
+                                                    {
+                                                      "type": "SYMBOL",
+                                                      "name": "_local_list"
+                                                    },
+                                                    {
+                                                      "type": "BLANK"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "SYMBOL",
+                                                  "name": "_block_optional_equation"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "STRING",
+                                              "value": "in"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_state"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
                       }
-                    }
-                  ]
+                    ]
+                  }
                 }
               ]
             }
           ]
+        }
+      ]
+    },
+    "automaton_handler_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_state_pat"
+        },
+        {
+          "type": "STRING",
+          "value": "->"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_let_list"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_local_list"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "block_expression"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "done"
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "then"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "continue"
+                    }
+                  ]
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_state"
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "then"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "continue"
+                    }
+                  ]
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "one_let"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "in"
+                        },
+                        {
+                          "type": "CHOICE",
+                          "members": [
+                            {
+                              "type": "SYMBOL",
+                              "name": "_let_list"
+                            },
+                            {
+                              "type": "BLANK"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "SEQ",
+                          "members": [
+                            {
+                              "type": "CHOICE",
+                              "members": [
+                                {
+                                  "type": "SYMBOL",
+                                  "name": "_let_list"
+                                },
+                                {
+                                  "type": "BLANK"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "CHOICE",
+                              "members": [
+                                {
+                                  "type": "SYMBOL",
+                                  "name": "_local_list"
+                                },
+                                {
+                                  "type": "BLANK"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "SYMBOL",
+                              "name": "_block_optional_equation"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "in"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_state"
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "until"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "unless"
+                    }
+                  ]
+                },
+                {
+                  "type": "PREC_LEFT",
+                  "value": 3,
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "_scondpat"
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "STRING",
+                                    "value": "then"
+                                  },
+                                  {
+                                    "type": "STRING",
+                                    "value": "continue"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "_state"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "_scondpat"
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "STRING",
+                                    "value": "then"
+                                  },
+                                  {
+                                    "type": "STRING",
+                                    "value": "continue"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "SEQ",
+                                    "members": [
+                                      {
+                                        "type": "SYMBOL",
+                                        "name": "one_let"
+                                      },
+                                      {
+                                        "type": "STRING",
+                                        "value": "in"
+                                      },
+                                      {
+                                        "type": "CHOICE",
+                                        "members": [
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "_let_list"
+                                          },
+                                          {
+                                            "type": "BLANK"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "SEQ",
+                                    "members": [
+                                      {
+                                        "type": "SEQ",
+                                        "members": [
+                                          {
+                                            "type": "CHOICE",
+                                            "members": [
+                                              {
+                                                "type": "SYMBOL",
+                                                "name": "_let_list"
+                                              },
+                                              {
+                                                "type": "BLANK"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "CHOICE",
+                                            "members": [
+                                              {
+                                                "type": "SYMBOL",
+                                                "name": "_local_list"
+                                              },
+                                              {
+                                                "type": "BLANK"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "_block_optional_equation"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "STRING",
+                                        "value": "in"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "_state"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "REPEAT",
+                        "content": {
+                          "type": "SEQ",
+                          "members": [
+                            {
+                              "type": "STRING",
+                              "value": "else"
+                            },
+                            {
+                              "type": "CHOICE",
+                              "members": [
+                                {
+                                  "type": "SEQ",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_scondpat"
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "STRING",
+                                          "value": "then"
+                                        },
+                                        {
+                                          "type": "STRING",
+                                          "value": "continue"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_state"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "SEQ",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_scondpat"
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "STRING",
+                                          "value": "then"
+                                        },
+                                        {
+                                          "type": "STRING",
+                                          "value": "continue"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "SEQ",
+                                          "members": [
+                                            {
+                                              "type": "SYMBOL",
+                                              "name": "one_let"
+                                            },
+                                            {
+                                              "type": "STRING",
+                                              "value": "in"
+                                            },
+                                            {
+                                              "type": "CHOICE",
+                                              "members": [
+                                                {
+                                                  "type": "SYMBOL",
+                                                  "name": "_let_list"
+                                                },
+                                                {
+                                                  "type": "BLANK"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "SEQ",
+                                          "members": [
+                                            {
+                                              "type": "SEQ",
+                                              "members": [
+                                                {
+                                                  "type": "CHOICE",
+                                                  "members": [
+                                                    {
+                                                      "type": "SYMBOL",
+                                                      "name": "_let_list"
+                                                    },
+                                                    {
+                                                      "type": "BLANK"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "CHOICE",
+                                                  "members": [
+                                                    {
+                                                      "type": "SYMBOL",
+                                                      "name": "_local_list"
+                                                    },
+                                                    {
+                                                      "type": "BLANK"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "SYMBOL",
+                                                  "name": "_block_optional_equation"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "STRING",
+                                              "value": "in"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_state"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "until"
+                },
+                {
+                  "type": "PREC_LEFT",
+                  "value": 3,
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "_scondpat"
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "STRING",
+                                    "value": "then"
+                                  },
+                                  {
+                                    "type": "STRING",
+                                    "value": "continue"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "_state"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "_scondpat"
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "STRING",
+                                    "value": "then"
+                                  },
+                                  {
+                                    "type": "STRING",
+                                    "value": "continue"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "SEQ",
+                                    "members": [
+                                      {
+                                        "type": "SYMBOL",
+                                        "name": "one_let"
+                                      },
+                                      {
+                                        "type": "STRING",
+                                        "value": "in"
+                                      },
+                                      {
+                                        "type": "CHOICE",
+                                        "members": [
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "_let_list"
+                                          },
+                                          {
+                                            "type": "BLANK"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "SEQ",
+                                    "members": [
+                                      {
+                                        "type": "SEQ",
+                                        "members": [
+                                          {
+                                            "type": "CHOICE",
+                                            "members": [
+                                              {
+                                                "type": "SYMBOL",
+                                                "name": "_let_list"
+                                              },
+                                              {
+                                                "type": "BLANK"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "CHOICE",
+                                            "members": [
+                                              {
+                                                "type": "SYMBOL",
+                                                "name": "_local_list"
+                                              },
+                                              {
+                                                "type": "BLANK"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "_block_optional_equation"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "STRING",
+                                        "value": "in"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "_state"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "REPEAT",
+                        "content": {
+                          "type": "SEQ",
+                          "members": [
+                            {
+                              "type": "STRING",
+                              "value": "else"
+                            },
+                            {
+                              "type": "CHOICE",
+                              "members": [
+                                {
+                                  "type": "SEQ",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_scondpat"
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "STRING",
+                                          "value": "then"
+                                        },
+                                        {
+                                          "type": "STRING",
+                                          "value": "continue"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_state"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "SEQ",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_scondpat"
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "STRING",
+                                          "value": "then"
+                                        },
+                                        {
+                                          "type": "STRING",
+                                          "value": "continue"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "SEQ",
+                                          "members": [
+                                            {
+                                              "type": "SYMBOL",
+                                              "name": "one_let"
+                                            },
+                                            {
+                                              "type": "STRING",
+                                              "value": "in"
+                                            },
+                                            {
+                                              "type": "CHOICE",
+                                              "members": [
+                                                {
+                                                  "type": "SYMBOL",
+                                                  "name": "_let_list"
+                                                },
+                                                {
+                                                  "type": "BLANK"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "SEQ",
+                                          "members": [
+                                            {
+                                              "type": "SEQ",
+                                              "members": [
+                                                {
+                                                  "type": "CHOICE",
+                                                  "members": [
+                                                    {
+                                                      "type": "SYMBOL",
+                                                      "name": "_let_list"
+                                                    },
+                                                    {
+                                                      "type": "BLANK"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "CHOICE",
+                                                  "members": [
+                                                    {
+                                                      "type": "SYMBOL",
+                                                      "name": "_local_list"
+                                                    },
+                                                    {
+                                                      "type": "BLANK"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "SYMBOL",
+                                                  "name": "_block_optional_equation"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "STRING",
+                                              "value": "in"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_state"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "STRING",
+                  "value": "unless"
+                },
+                {
+                  "type": "PREC_LEFT",
+                  "value": 3,
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "_scondpat"
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "STRING",
+                                    "value": "then"
+                                  },
+                                  {
+                                    "type": "STRING",
+                                    "value": "continue"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "_state"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "_scondpat"
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "STRING",
+                                    "value": "then"
+                                  },
+                                  {
+                                    "type": "STRING",
+                                    "value": "continue"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "CHOICE",
+                                "members": [
+                                  {
+                                    "type": "SEQ",
+                                    "members": [
+                                      {
+                                        "type": "SYMBOL",
+                                        "name": "one_let"
+                                      },
+                                      {
+                                        "type": "STRING",
+                                        "value": "in"
+                                      },
+                                      {
+                                        "type": "CHOICE",
+                                        "members": [
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "_let_list"
+                                          },
+                                          {
+                                            "type": "BLANK"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "SEQ",
+                                    "members": [
+                                      {
+                                        "type": "SEQ",
+                                        "members": [
+                                          {
+                                            "type": "CHOICE",
+                                            "members": [
+                                              {
+                                                "type": "SYMBOL",
+                                                "name": "_let_list"
+                                              },
+                                              {
+                                                "type": "BLANK"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "CHOICE",
+                                            "members": [
+                                              {
+                                                "type": "SYMBOL",
+                                                "name": "_local_list"
+                                              },
+                                              {
+                                                "type": "BLANK"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "SYMBOL",
+                                            "name": "_block_optional_equation"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "STRING",
+                                        "value": "in"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "_state"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "REPEAT",
+                        "content": {
+                          "type": "SEQ",
+                          "members": [
+                            {
+                              "type": "STRING",
+                              "value": "else"
+                            },
+                            {
+                              "type": "CHOICE",
+                              "members": [
+                                {
+                                  "type": "SEQ",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_scondpat"
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "STRING",
+                                          "value": "then"
+                                        },
+                                        {
+                                          "type": "STRING",
+                                          "value": "continue"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_state"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "SEQ",
+                                  "members": [
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_scondpat"
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "STRING",
+                                          "value": "then"
+                                        },
+                                        {
+                                          "type": "STRING",
+                                          "value": "continue"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "CHOICE",
+                                      "members": [
+                                        {
+                                          "type": "SEQ",
+                                          "members": [
+                                            {
+                                              "type": "SYMBOL",
+                                              "name": "one_let"
+                                            },
+                                            {
+                                              "type": "STRING",
+                                              "value": "in"
+                                            },
+                                            {
+                                              "type": "CHOICE",
+                                              "members": [
+                                                {
+                                                  "type": "SYMBOL",
+                                                  "name": "_let_list"
+                                                },
+                                                {
+                                                  "type": "BLANK"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "SEQ",
+                                          "members": [
+                                            {
+                                              "type": "SEQ",
+                                              "members": [
+                                                {
+                                                  "type": "CHOICE",
+                                                  "members": [
+                                                    {
+                                                      "type": "SYMBOL",
+                                                      "name": "_let_list"
+                                                    },
+                                                    {
+                                                      "type": "BLANK"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "CHOICE",
+                                                  "members": [
+                                                    {
+                                                      "type": "SYMBOL",
+                                                      "name": "_local_list"
+                                                    },
+                                                    {
+                                                      "type": "BLANK"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "type": "SYMBOL",
+                                                  "name": "_block_optional_equation"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "type": "STRING",
+                                              "value": "in"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "SYMBOL",
+                                      "name": "_state"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "_automaton_handlers_equation": {
+      "type": "PREC_RIGHT",
+      "value": 3,
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "SYMBOL",
+          "name": "automaton_handler_equation"
         }
       }
     },
@@ -2379,1068 +3371,54 @@
       "content": {
         "type": "REPEAT1",
         "content": {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_state_pat"
-            },
-            {
-              "type": "STRING",
-              "value": "->"
-            },
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "_let_list"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "_local_list"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "block_expression"
-                }
-              ]
-            },
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "done"
-                },
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "STRING",
-                          "value": "then"
-                        },
-                        {
-                          "type": "STRING",
-                          "value": "continue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_state"
-                    }
-                  ]
-                },
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "STRING",
-                          "value": "then"
-                        },
-                        {
-                          "type": "STRING",
-                          "value": "continue"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SEQ",
-                          "members": [
-                            {
-                              "type": "SYMBOL",
-                              "name": "one_let"
-                            },
-                            {
-                              "type": "STRING",
-                              "value": "in"
-                            },
-                            {
-                              "type": "CHOICE",
-                              "members": [
-                                {
-                                  "type": "SYMBOL",
-                                  "name": "_let_list"
-                                },
-                                {
-                                  "type": "BLANK"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "SEQ",
-                          "members": [
-                            {
-                              "type": "SEQ",
-                              "members": [
-                                {
-                                  "type": "CHOICE",
-                                  "members": [
-                                    {
-                                      "type": "SYMBOL",
-                                      "name": "_let_list"
-                                    },
-                                    {
-                                      "type": "BLANK"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "CHOICE",
-                                  "members": [
-                                    {
-                                      "type": "SYMBOL",
-                                      "name": "_local_list"
-                                    },
-                                    {
-                                      "type": "BLANK"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "SYMBOL",
-                                  "name": "_block_optional_equation"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "STRING",
-                              "value": "in"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_state"
-                    }
-                  ]
-                },
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "STRING",
-                          "value": "until"
-                        },
-                        {
-                          "type": "STRING",
-                          "value": "unless"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "PREC_LEFT",
-                      "value": 3,
-                      "content": {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "SEQ",
-                                "members": [
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_scondpat"
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "STRING",
-                                        "value": "then"
-                                      },
-                                      {
-                                        "type": "STRING",
-                                        "value": "continue"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_state"
-                                  }
-                                ]
-                              },
-                              {
-                                "type": "SEQ",
-                                "members": [
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_scondpat"
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "STRING",
-                                        "value": "then"
-                                      },
-                                      {
-                                        "type": "STRING",
-                                        "value": "continue"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "SEQ",
-                                        "members": [
-                                          {
-                                            "type": "SYMBOL",
-                                            "name": "one_let"
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "in"
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_let_list"
-                                              },
-                                              {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "type": "SEQ",
-                                        "members": [
-                                          {
-                                            "type": "SEQ",
-                                            "members": [
-                                              {
-                                                "type": "CHOICE",
-                                                "members": [
-                                                  {
-                                                    "type": "SYMBOL",
-                                                    "name": "_let_list"
-                                                  },
-                                                  {
-                                                    "type": "BLANK"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "type": "CHOICE",
-                                                "members": [
-                                                  {
-                                                    "type": "SYMBOL",
-                                                    "name": "_local_list"
-                                                  },
-                                                  {
-                                                    "type": "BLANK"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_block_optional_equation"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "in"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_state"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "REPEAT",
-                            "content": {
-                              "type": "SEQ",
-                              "members": [
-                                {
-                                  "type": "STRING",
-                                  "value": "else"
-                                },
-                                {
-                                  "type": "CHOICE",
-                                  "members": [
-                                    {
-                                      "type": "SEQ",
-                                      "members": [
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_scondpat"
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "STRING",
-                                              "value": "then"
-                                            },
-                                            {
-                                              "type": "STRING",
-                                              "value": "continue"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_state"
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "SEQ",
-                                      "members": [
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_scondpat"
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "STRING",
-                                              "value": "then"
-                                            },
-                                            {
-                                              "type": "STRING",
-                                              "value": "continue"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "SEQ",
-                                              "members": [
-                                                {
-                                                  "type": "SYMBOL",
-                                                  "name": "one_let"
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "in"
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_let_list"
-                                                    },
-                                                    {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            },
-                                            {
-                                              "type": "SEQ",
-                                              "members": [
-                                                {
-                                                  "type": "SEQ",
-                                                  "members": [
-                                                    {
-                                                      "type": "CHOICE",
-                                                      "members": [
-                                                        {
-                                                          "type": "SYMBOL",
-                                                          "name": "_let_list"
-                                                        },
-                                                        {
-                                                          "type": "BLANK"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "type": "CHOICE",
-                                                      "members": [
-                                                        {
-                                                          "type": "SYMBOL",
-                                                          "name": "_local_list"
-                                                        },
-                                                        {
-                                                          "type": "BLANK"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_block_optional_equation"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "in"
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_state"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                },
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "until"
-                    },
-                    {
-                      "type": "PREC_LEFT",
-                      "value": 3,
-                      "content": {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "SEQ",
-                                "members": [
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_scondpat"
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "STRING",
-                                        "value": "then"
-                                      },
-                                      {
-                                        "type": "STRING",
-                                        "value": "continue"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_state"
-                                  }
-                                ]
-                              },
-                              {
-                                "type": "SEQ",
-                                "members": [
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_scondpat"
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "STRING",
-                                        "value": "then"
-                                      },
-                                      {
-                                        "type": "STRING",
-                                        "value": "continue"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "SEQ",
-                                        "members": [
-                                          {
-                                            "type": "SYMBOL",
-                                            "name": "one_let"
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "in"
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_let_list"
-                                              },
-                                              {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "type": "SEQ",
-                                        "members": [
-                                          {
-                                            "type": "SEQ",
-                                            "members": [
-                                              {
-                                                "type": "CHOICE",
-                                                "members": [
-                                                  {
-                                                    "type": "SYMBOL",
-                                                    "name": "_let_list"
-                                                  },
-                                                  {
-                                                    "type": "BLANK"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "type": "CHOICE",
-                                                "members": [
-                                                  {
-                                                    "type": "SYMBOL",
-                                                    "name": "_local_list"
-                                                  },
-                                                  {
-                                                    "type": "BLANK"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_block_optional_equation"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "in"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_state"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "REPEAT",
-                            "content": {
-                              "type": "SEQ",
-                              "members": [
-                                {
-                                  "type": "STRING",
-                                  "value": "else"
-                                },
-                                {
-                                  "type": "CHOICE",
-                                  "members": [
-                                    {
-                                      "type": "SEQ",
-                                      "members": [
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_scondpat"
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "STRING",
-                                              "value": "then"
-                                            },
-                                            {
-                                              "type": "STRING",
-                                              "value": "continue"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_state"
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "SEQ",
-                                      "members": [
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_scondpat"
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "STRING",
-                                              "value": "then"
-                                            },
-                                            {
-                                              "type": "STRING",
-                                              "value": "continue"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "SEQ",
-                                              "members": [
-                                                {
-                                                  "type": "SYMBOL",
-                                                  "name": "one_let"
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "in"
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_let_list"
-                                                    },
-                                                    {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            },
-                                            {
-                                              "type": "SEQ",
-                                              "members": [
-                                                {
-                                                  "type": "SEQ",
-                                                  "members": [
-                                                    {
-                                                      "type": "CHOICE",
-                                                      "members": [
-                                                        {
-                                                          "type": "SYMBOL",
-                                                          "name": "_let_list"
-                                                        },
-                                                        {
-                                                          "type": "BLANK"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "type": "CHOICE",
-                                                      "members": [
-                                                        {
-                                                          "type": "SYMBOL",
-                                                          "name": "_local_list"
-                                                        },
-                                                        {
-                                                          "type": "BLANK"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_block_optional_equation"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "in"
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_state"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "unless"
-                    },
-                    {
-                      "type": "PREC_LEFT",
-                      "value": 3,
-                      "content": {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "SEQ",
-                                "members": [
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_scondpat"
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "STRING",
-                                        "value": "then"
-                                      },
-                                      {
-                                        "type": "STRING",
-                                        "value": "continue"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_state"
-                                  }
-                                ]
-                              },
-                              {
-                                "type": "SEQ",
-                                "members": [
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_scondpat"
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "STRING",
-                                        "value": "then"
-                                      },
-                                      {
-                                        "type": "STRING",
-                                        "value": "continue"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "CHOICE",
-                                    "members": [
-                                      {
-                                        "type": "SEQ",
-                                        "members": [
-                                          {
-                                            "type": "SYMBOL",
-                                            "name": "one_let"
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "in"
-                                          },
-                                          {
-                                            "type": "CHOICE",
-                                            "members": [
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_let_list"
-                                              },
-                                              {
-                                                "type": "BLANK"
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      },
-                                      {
-                                        "type": "SEQ",
-                                        "members": [
-                                          {
-                                            "type": "SEQ",
-                                            "members": [
-                                              {
-                                                "type": "CHOICE",
-                                                "members": [
-                                                  {
-                                                    "type": "SYMBOL",
-                                                    "name": "_let_list"
-                                                  },
-                                                  {
-                                                    "type": "BLANK"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "type": "CHOICE",
-                                                "members": [
-                                                  {
-                                                    "type": "SYMBOL",
-                                                    "name": "_local_list"
-                                                  },
-                                                  {
-                                                    "type": "BLANK"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "type": "SYMBOL",
-                                                "name": "_block_optional_equation"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "type": "STRING",
-                                            "value": "in"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "type": "SYMBOL",
-                                    "name": "_state"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "REPEAT",
-                            "content": {
-                              "type": "SEQ",
-                              "members": [
-                                {
-                                  "type": "STRING",
-                                  "value": "else"
-                                },
-                                {
-                                  "type": "CHOICE",
-                                  "members": [
-                                    {
-                                      "type": "SEQ",
-                                      "members": [
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_scondpat"
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "STRING",
-                                              "value": "then"
-                                            },
-                                            {
-                                              "type": "STRING",
-                                              "value": "continue"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_state"
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "SEQ",
-                                      "members": [
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_scondpat"
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "STRING",
-                                              "value": "then"
-                                            },
-                                            {
-                                              "type": "STRING",
-                                              "value": "continue"
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "CHOICE",
-                                          "members": [
-                                            {
-                                              "type": "SEQ",
-                                              "members": [
-                                                {
-                                                  "type": "SYMBOL",
-                                                  "name": "one_let"
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "in"
-                                                },
-                                                {
-                                                  "type": "CHOICE",
-                                                  "members": [
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_let_list"
-                                                    },
-                                                    {
-                                                      "type": "BLANK"
-                                                    }
-                                                  ]
-                                                }
-                                              ]
-                                            },
-                                            {
-                                              "type": "SEQ",
-                                              "members": [
-                                                {
-                                                  "type": "SEQ",
-                                                  "members": [
-                                                    {
-                                                      "type": "CHOICE",
-                                                      "members": [
-                                                        {
-                                                          "type": "SYMBOL",
-                                                          "name": "_let_list"
-                                                        },
-                                                        {
-                                                          "type": "BLANK"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "type": "CHOICE",
-                                                      "members": [
-                                                        {
-                                                          "type": "SYMBOL",
-                                                          "name": "_local_list"
-                                                        },
-                                                        {
-                                                          "type": "BLANK"
-                                                        }
-                                                      ]
-                                                    },
-                                                    {
-                                                      "type": "SYMBOL",
-                                                      "name": "_block_optional_equation"
-                                                    }
-                                                  ]
-                                                },
-                                                {
-                                                  "type": "STRING",
-                                                  "value": "in"
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        },
-                                        {
-                                          "type": "SYMBOL",
-                                          "name": "_state"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "automaton_handler_expression"
         }
       }
     },
-    "_match_handlers_block_eq": {
+    "match_handler_equation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "pattern"
+        },
+        {
+          "type": "STRING",
+          "value": "->"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_block_of_equation"
+        }
+      ]
+    },
+    "match_handler_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "pattern"
+        },
+        {
+          "type": "STRING",
+          "value": "->"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_expression"
+        }
+      ]
+    },
+    "_match_handlers_equation": {
       "type": "PREC_RIGHT",
       "value": 2,
       "content": {
         "type": "SEQ",
         "members": [
           {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "pattern"
-              },
-              {
-                "type": "STRING",
-                "value": "->"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_block_of_equation"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "match_handler_equation"
           },
           {
             "type": "REPEAT",
@@ -3452,21 +3430,8 @@
                   "value": "|"
                 },
                 {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "pattern"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "->"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_block_of_equation"
-                    }
-                  ]
+                  "type": "SYMBOL",
+                  "name": "match_handler_equation"
                 }
               ]
             }
@@ -3481,21 +3446,8 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "pattern"
-              },
-              {
-                "type": "STRING",
-                "value": "->"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_expression"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "match_handler_expression"
           },
           {
             "type": "REPEAT",
@@ -3507,21 +3459,146 @@
                   "value": "|"
                 },
                 {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "pattern"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "->"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_expression"
-                    }
-                  ]
+                  "type": "SYMBOL",
+                  "name": "match_handler_expression"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "present_handler_equation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_scondpat"
+        },
+        {
+          "type": "STRING",
+          "value": "->"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_block_of_equation"
+        }
+      ]
+    },
+    "present_handler_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_scondpat"
+        },
+        {
+          "type": "STRING",
+          "value": "->"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_expression"
+        }
+      ]
+    },
+    "_present_handlers_equation": {
+      "type": "PREC_RIGHT",
+      "value": 2,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "present_handler_equation"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "|"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "present_handler_equation"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "_present_handlers_expression": {
+      "type": "PREC_RIGHT",
+      "value": 2,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "present_handler_expression"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "|"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "present_handler_expression"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "der_reset_handler": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_scondpat"
+        },
+        {
+          "type": "STRING",
+          "value": "->"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_expression"
+        }
+      ]
+    },
+    "_der_reset_handlers": {
+      "type": "PREC_RIGHT",
+      "value": 2,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "der_reset_handler"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "|"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "der_reset_handler"
                 }
               ]
             }
@@ -3674,59 +3751,8 @@
             ]
           },
           {
-            "type": "PREC_RIGHT",
-            "value": 2,
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "_scondpat"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "->"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_block_of_equation"
-                    }
-                  ]
-                },
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "STRING",
-                        "value": "|"
-                      },
-                      {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "SYMBOL",
-                            "name": "_scondpat"
-                          },
-                          {
-                            "type": "STRING",
-                            "value": "->"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "_block_of_equation"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
+            "type": "SYMBOL",
+            "name": "_present_handlers_equation"
           },
           {
             "type": "CHOICE",
@@ -3846,7 +3872,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "_match_handlers_block_eq"
+            "name": "_match_handlers_equation"
           },
           {
             "type": "CHOICE",
@@ -4156,59 +4182,8 @@
                   ]
                 },
                 {
-                  "type": "PREC_RIGHT",
-                  "value": 2,
-                  "content": {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "SYMBOL",
-                            "name": "_scondpat"
-                          },
-                          {
-                            "type": "STRING",
-                            "value": "->"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "_expression"
-                          }
-                        ]
-                      },
-                      {
-                        "type": "REPEAT",
-                        "content": {
-                          "type": "SEQ",
-                          "members": [
-                            {
-                              "type": "STRING",
-                              "value": "|"
-                            },
-                            {
-                              "type": "SEQ",
-                              "members": [
-                                {
-                                  "type": "SYMBOL",
-                                  "name": "_scondpat"
-                                },
-                                {
-                                  "type": "STRING",
-                                  "value": "->"
-                                },
-                                {
-                                  "type": "SYMBOL",
-                                  "name": "_expression"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
+                  "type": "SYMBOL",
+                  "name": "_der_reset_handlers"
                 }
               ]
             },
@@ -5668,19 +5643,32 @@
             },
             {
               "type": "SYMBOL",
-              "name": "_simple_expression"
-            },
-            {
-              "type": "STRING",
-              "value": ".."
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_simple_expression"
+              "name": "_range_pattern"
             }
           ]
         }
       ]
+    },
+    "_range_pattern": {
+      "type": "PREC",
+      "value": 18,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_simple_expression"
+          },
+          {
+            "type": "STRING",
+            "value": ".."
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_simple_expression"
+          }
+        ]
+      }
     },
     "_state": {
       "type": "CHOICE",

@@ -47,8 +47,8 @@ let hybrid controller(low, high, temp) = u where
              (identifier)
    (eq_equation (pattern (identifier))
     (present_expression
-     (identifier) (infx) (identifier) (bool)
-     (identifier) (infx) (identifier) (bool)
+     (present_handler_expression (identifier) (infx) (identifier) (bool))
+     (present_handler_expression (identifier) (infx) (identifier) (bool))
      (identifier) (infx) (identifier))))
 )
 

@@ -55,8 +55,8 @@ let hybrid main () =
 
      (der_equation (identifier) (prfx) (identifier)
      (float)
-     (identifier)
-      (prfx) (identifier) (infx)  (identifier))
+     (der_reset_handler (identifier)
+      (prfx) (identifier) (infx)  (identifier)))
 
     (eq_equation (pattern (identifier)) (prfx) (identifier) (identifier) (infx) (identifier)))
 
@@ -66,10 +66,12 @@ let hybrid main () =
      (let_expression (eq_equation (pattern (pattern (pattern
         (pattern (identifier)) (pattern)) (pattern (identifier))))
         (identifier) (identifier) (identifier))
-     (let_expression (eq_equation (pattern (identifier)) (present_expression (float) (identifier)))
-     (present_expression (identifier)
+     (let_expression (eq_equation (pattern (identifier))
+        (present_expression (present_handler_expression (float))
+                            (present_handler_expression (identifier))))
+     (present_expression (present_handler_expression (identifier)
         (constructor) (identifier)
           (identifier) (infx) (identifier)
           (identifier) (infx) (identifier)
-          (identifier) (identifier))))))
+          (identifier) (identifier)))))))
 )
