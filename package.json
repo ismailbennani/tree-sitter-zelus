@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-zelus",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "description": "A parser for the synchronous hybrid language Zelus (http://zelus.di.ens.fr)",
   "main": "index.js",
   "scripts": {
