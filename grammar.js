@@ -311,12 +311,14 @@ module.exports = grammar({
             'block_expression'
         ),
         _automaton_handlers_equation: ($) => prec.right(
-            PREC.seq, repeat1(
+            PREC.seq, separated_nonempty_list(
+                '|',
                 $.automaton_handler_equation
             )),
         _automaton_handlers_expression: ($) =>
             prec.right(
-                PREC.seq, repeat1(
+                PREC.seq, separated_nonempty_list(
+                    '|',
                     $.automaton_handler_expression
                 )
             ),
@@ -772,8 +774,8 @@ module.exports = grammar({
             $._ext_ident),
 
         _infx0: ($) => choice(
-            'fby',
-            /[\=<\>\&\|\$][\!\$\%\&\*\+\-\.\/\:<\=\>\?\@\^\|\~]*/
+            'fby', '||',
+            /[\=<\>\&\$][\!\$\%\&\*\+\-\.\/\:<\=\>\?\@\^\|\~]*/
         ),
         _infx1: ($) => choice(
             /[\@\^][\!\$\%\&\*\+\-\.\/\:<\=\>\?\@\^\|\~]*/

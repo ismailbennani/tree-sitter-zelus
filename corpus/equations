@@ -1,19 +1,27 @@
 ==================================
-Simple equation: automaton
+Simple equation: automaton 1
 ==================================
 
 let hybrid f x = () where
 	automaton
 		| X -> do x = 5 done
+		| X -> do x = 5 done
+	end
 
 ---
 
-(source_file (fun_declaration
-	 (kind) (fun_name) (identifier)
+(source_file
+	(fun_declaration (kind) (fun_name) (identifier)
 	 	(automaton_equation
 			(automaton_handler_equation (constructor)
-				(block_equation (eq_equation (pattern (identifier)) (integer)))))
-))
+				(block_equation (eq_equation (pattern (identifier)) (integer)))
+			)
+			(automaton_handler_equation (constructor)
+				(block_equation (eq_equation (pattern (identifier)) (integer)))
+			)
+		)
+	)
+)
 
 ==================================
 Simple equation: automaton 2

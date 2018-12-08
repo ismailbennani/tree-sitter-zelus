@@ -3416,22 +3416,58 @@
       "type": "PREC_RIGHT",
       "value": 3,
       "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "SYMBOL",
-          "name": "automaton_handler_equation"
-        }
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "automaton_handler_equation"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "|"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "automaton_handler_equation"
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     "_automaton_handlers_expression": {
       "type": "PREC_RIGHT",
       "value": 3,
       "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "SYMBOL",
-          "name": "automaton_handler_expression"
-        }
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "automaton_handler_expression"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "|"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "automaton_handler_expression"
+                }
+              ]
+            }
+          }
+        ]
       }
     },
     "match_handler_equation": {
@@ -6000,8 +6036,12 @@
           "value": "fby"
         },
         {
+          "type": "STRING",
+          "value": "||"
+        },
+        {
           "type": "PATTERN",
-          "value": "[\\=<\\>\\&\\|\\$][\\!\\$\\%\\&\\*\\+\\-\\.\\/\\:<\\=\\>\\?\\@\\^\\|\\~]*"
+          "value": "[\\=<\\>\\&\\$][\\!\\$\\%\\&\\*\\+\\-\\.\\/\\:<\\=\\>\\?\\@\\^\\|\\~]*"
         }
       ]
     },

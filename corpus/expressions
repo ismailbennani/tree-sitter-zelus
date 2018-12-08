@@ -436,6 +436,7 @@ Expression: automaton
 let x =
   automaton
     | X -> do () done
+    | X -> do () done
     init X
 
 ---
@@ -443,6 +444,7 @@ let x =
 (source_file
   (let_declaration (identifier)
     (automaton_expression
+      (automaton_handler_expression (constructor) (block_expression))
       (automaton_handler_expression (constructor) (block_expression))
       (constructor)
     )
