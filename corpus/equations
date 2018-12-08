@@ -86,7 +86,7 @@ let hybrid f x = () where
 	 (kind) (fun_name) (identifier)
 		 (match_equation
 		 	(identifier)
-				(pattern (constructor)) (do_equation))
+				(pattern (constructor)) (do_done_block))
 		))
 
 ==================================
@@ -100,7 +100,7 @@ let hybrid f x = () where
 
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
-		 (if_equation (identifier) (do_equation))))
+		 (if_equation (identifier) (do_done_block))))
 
 ==================================
 Simple equation: if then else
@@ -114,8 +114,8 @@ let hybrid f x = () where
 
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
-		 (if_equation (identifier) (do_equation)
-		  (else_equation (do_equation)))))
+		 (if_equation (identifier) (do_done_block)
+		  (else_equation (do_done_block)))))
 
 ==================================
 Simple equation: present
@@ -132,8 +132,8 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(present_equation
-			(identifier) (do_equation)
-			 (identifier) (do_equation)
+			(identifier) (do_done_block)
+			 (identifier) (do_done_block)
 		)
 ))
 
@@ -153,9 +153,9 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(present_equation
-			(identifier) (do_equation)
-			 (identifier) (do_equation)
-			(do_equation)
+			(identifier) (do_done_block)
+			 (identifier) (do_done_block)
+			(do_done_block)
 		)
 ))
 
@@ -188,12 +188,11 @@ let hybrid f x = () where
 
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
-	 	(do_equation
 		 (one_let (eq_equation (pattern (identifier)) (integer)))
 		 (one_local (identifier))
 		 (one_local (identifier) (integer))
 		 (one_local (identifier) (char))
-		)
+		 (do_done_block)
 ))
 
 ==================================

@@ -324,12 +324,15 @@ module.exports = grammar({
 
 
         _block_of_equation: ($) => $._simple_equation,
-        do_equation: ($) => seq(
-            optional($._let_list),
-            optional($._local_list),
+        do_done_block: ($) => seq(
             'do',
             optional($._equation_list),
             'done'
+        ),
+        _do_equation: ($) => seq(
+            optional($._let_list),
+            optional($._local_list),
+            $.do_done_block
         ),
         reset_equation: ($) => seq(
             'reset',
@@ -337,11 +340,13 @@ module.exports = grammar({
             'every',
             $._expression
         ),
-        present_equation: ($) => prec.right(PREC.present,
+        present_equation: ($) => prec.right(
+            PREC.present,
             seq(
                 'present',
                 optional('|'),
-                present_handlers($._scondpat, $
+                present_handlers($._scondpat,
+                    $
                     ._block_of_equation),
                 optional(
                     seq(
@@ -356,7 +361,8 @@ module.exports = grammar({
             'else',
             $._block_of_equation
         ),
-        if_equation: ($) => prec.right(PREC.if,
+        if_equation: ($) => prec.right(PREC
+            .if,
             seq(
                 'if',
                 $._seq_expression,
@@ -365,7 +371,8 @@ module.exports = grammar({
                 optional($.else_equation)
             )
         ),
-        match_equation: ($) => prec.right(PREC.match,
+        match_equation: ($) => prec.right(
+            PREC.match,
             seq(
                 'match',
                 $._seq_expression,
@@ -375,7 +382,8 @@ module.exports = grammar({
                 optional('end')
             )
         ),
-        automaton_equation: ($) => prec.right(PREC.automaton,
+        automaton_equation: ($) => prec.right(
+            PREC.automaton,
             seq(
                 'automaton',
                 optional('|'),
@@ -433,7 +441,8 @@ module.exports = grammar({
             optional(seq('init',
                 $._seq_expression))
         ),
-        init_equation: ($) => seq('init', $._ide,
+        init_equation: ($) => seq('init', $
+            ._ide,
             '=', $._seq_expression
         ),
         emit_equation: ($) => seq(
@@ -452,7 +461,7 @@ module.exports = grammar({
             $.if_equation,
             $.present_equation,
             $.reset_equation,
-            $.do_equation,
+            $._do_equation,
             $.forall_equation
         ),
         _equation: ($) => choice(
@@ -471,7 +480,8 @@ module.exports = grammar({
                     $._equation)
             )
         ),
-        _equation_list: ($) => list_of('and',
+        _equation_list: ($) => list_of(
+            'and',
             $._equation),
 
 
@@ -506,13 +516,15 @@ module.exports = grammar({
             seq('-', choice($.integer, $.float)),
             $.constructor,
             $._ide,
-            seq('(', separated_nonempty_list(
+            seq('(',
+                separated_nonempty_list(
                     ',', $.pattern),
                 ')'),
             seq('(', $.pattern, ':', $._type_expression,
                 ')'),
             seq('{', '_', '}'),
-            seq('{', separated_nonempty_list(
+            seq('{',
+                separated_nonempty_list(
                     ';', $.pattern_label),
                 '}')
         ),
@@ -522,7 +534,8 @@ module.exports = grammar({
                 seq($.pattern, 'as', $.identifier)
             ),
             prec.right(PREC.or,
-                seq($.pattern, '|', $.pattern)),
+                seq($.pattern, '|', $.pattern)
+            ),
             prec.left(PREC.seq,
                 seq($.pattern, ',',
                     separated_nonempty_list(
@@ -556,7 +569,8 @@ module.exports = grammar({
             $._simple_type,
             // ty * ty [* ty ...]
             seq(
-                separated_nonempty_list('*', $._simple_type),
+                separated_nonempty_list('*',
+                    $._simple_type),
                 '*', $._simple_type
             ),
             // ty -> ty
@@ -582,22 +596,26 @@ module.exports = grammar({
             // (ty, ty [, ty...]) var
             seq('(',
                 $._type_expression, ',',
-                separated_nonempty_list(',', $._type_expression),
+                separated_nonempty_list(',',
+                    $._type_expression),
                 ')', alias($._ext_ident, $.ty_name)
             ),
             // ty[size]
             seq($._simple_type, '[', $._size_expression,
                 ']'),
             // (ty)
-            seq('(', $._type_expression, ')')
+            seq('(', $._type_expression,
+                ')')
         ),
         _size_expression: ($) => choice(
             $.integer,
             $._ext_ident,
             prec.left(PREC.add, seq($._size_expression,
-                '+', $._size_expression)),
+                '+', $._size_expression
+            )),
             prec.left(PREC.add, seq($._size_expression,
-                '-', $._size_expression))
+                '-', $._size_expression
+            ))
         ),
 
 
@@ -649,22 +667,25 @@ module.exports = grammar({
             seq(
                 $.constructor,
                 '(',
-                separated_nonempty_list(',', $._expression),
+                separated_nonempty_list(',',
+                    $._expression),
                 ')'
             )
         ),
         _state_pat: ($) => choice(
             $.constructor,
-            seq($.constructor, '(', list_of(',',
+            seq($.constructor, '(', list_of(
+                    ',',
                     $.identifier),
                 ')')
         ),
 
 
-        _ext_ident: ($) => prec(PREC.dot, choice(
-            $._ide,
-            seq($.constructor, '.', $._ide)
-        )),
+        _ext_ident: ($) => prec(PREC.dot,
+            choice(
+                $._ide,
+                seq($.constructor, '.', $._ide)
+            )),
         _ide: ($) => choice(
             $.identifier,
             seq('(', $.infx, ')')),
@@ -676,7 +697,8 @@ module.exports = grammar({
             $.identifier, ':', $._type_expression
         ),
         _label_expr: ($) => seq(
-            $._ext_ident, '=', $._expression),
+            $._ext_ident, '=', $._expression
+        ),
 
 
         _atomic_constant: ($) => choice(
@@ -709,7 +731,8 @@ module.exports = grammar({
             /\*\*[\!\$\%\&\*\+\-\.\/\:<\=\>\?\@\^\|\~]*/
         ),
         infx: ($) => choice(
-            $._infx0, $._infx1, $._infx2, $._infx3,
+            $._infx0, $._infx1, $._infx2, $
+            ._infx3,
             $._infx4
         ),
 
@@ -720,9 +743,12 @@ module.exports = grammar({
         ),
 
 
-        identifier: ($) => /[a-z_][a-zA-Z0-9_']*/,
-        constructor: ($) => /[A-Z][a-zA-Z0-9_']*/,
-        type_var: ($) => /'[a-z_][a-zA-Z0-9_']*/,
+        identifier: ($) =>
+            /[a-z_][a-zA-Z0-9_']*/,
+        constructor: ($) =>
+            /[A-Z][a-zA-Z0-9_']*/,
+        type_var: ($) =>
+            /'[a-z_][a-zA-Z0-9_']*/,
 
         integer: ($) =>
             /(\d+|0[xX][0-9A-Za-z]+|0[oO][0-9]+|0[bB][0-9]+)/,
@@ -739,22 +765,24 @@ module.exports = grammar({
             '"'
         ),
         // shamelessly stolen from (tree-sitter-c/grammar.js)[https://github.com/tree-sitter/tree-sitter-c/blob/master/grammar.js]
-        escape_sequence: $ => token.immediate(seq(
-            '\\',
-            choice(
-                /[^xuU]/,
-                /\d{2,3}/,
-                /x[0-9a-fA-F]{2,}/,
-                /u[0-9a-fA-F]{4}/,
-                /U[0-9a-fA-F]{8}/
-            )
-        )),
+        escape_sequence: $ => token.immediate(
+            seq(
+                '\\',
+                choice(
+                    /[^xuU]/,
+                    /\d{2,3}/,
+                    /x[0-9a-fA-F]{2,}/,
+                    /u[0-9a-fA-F]{4}/,
+                    /U[0-9a-fA-F]{8}/
+                )
+            )),
         char: ($) =>
             /'([^"\\]|\\[\\'ntbr]|\\[0-9]{3})'/,
         bool: ($) => choice('true', 'false'),
 
         kind: ($) => choice(
-            'node', 'hybrid', 'discrete', 'fun',
+            'node', 'hybrid', 'discrete',
+            'fun',
             'static'),
         arrow: ($) => choice(
             '->', '-A->', '-C->', '-D->',
@@ -763,7 +791,8 @@ module.exports = grammar({
 
         // shamelessly stolen and adapted from (tree-sitter-c/grammar.js)[https://github.com/tree-sitter/tree-sitter-c/blob/master/grammar.js]
         comment: ($) => token(seq('(*',
-            /[^*]*\*+([^)*][^*]*\*+)*/, ')'
+            /[^*]*\*+([^)*][^*]*\*+)*/,
+            ')'
         )),
 
     }
@@ -774,18 +803,21 @@ function separated_nonempty_list(sep, rule) {
 }
 
 function list_of(sep, rule) {
-    return seq(optional(sep), separated_nonempty_list(sep,
-        rule));
+    return seq(optional(sep),
+        separated_nonempty_list(sep,
+            rule));
 }
 
 function label_list(rule) {
-    return seq(separated_nonempty_list(';', rule), optional(
-        ';'));
+    return seq(separated_nonempty_list(';', rule),
+        optional(
+            ';'));
 }
 
 function present_handlers(pattern, rule) {
     return prec.right(PREC.match,
-        separated_nonempty_list('|', seq(pattern, '->',
+        separated_nonempty_list('|', seq(
+            pattern, '->',
             rule))
     );
 }
@@ -805,7 +837,8 @@ function automaton_handlers(rule) {
             seq($.one_let, 'in', optional($._let_list)),
             seq(optional($._let_list),
                 optional($._local_list),
-                'do', optional($._equation_list), 'in')
+                'do', optional($._equation_list),
+                'in')
         );
     }
 
@@ -820,15 +853,17 @@ function automaton_handlers(rule) {
     function _escape($) {
         return choice(
             seq($._scondpat, _then_cont($), $._state),
-            seq($._scondpat, _then_cont($), _emission($),
+            seq($._scondpat, _then_cont($),
+                _emission($),
                 $._state)
         );
     }
 
     function _escape_list($) {
-        return prec.left(PREC.seq, separated_nonempty_list(
-            'else', _escape($)
-        ));
+        return prec.left(PREC.seq,
+            separated_nonempty_list(
+                'else', _escape($)
+            ));
     }
 
     return ($) => prec.right(PREC.seq, repeat1(seq(
@@ -838,11 +873,14 @@ function automaton_handlers(rule) {
         choice(
             'done',
             seq(_then_cont($), $._state),
-            seq(_then_cont($), _emission($), $._state),
-            seq(_until_unless($), _escape_list(
-                $)),
+            seq(_then_cont($),
+                _emission($), $._state),
+            seq(_until_unless($),
+                _escape_list(
+                    $)),
             seq('until', _escape_list($),
-                'unless', _escape_list($))
+                'unless', _escape_list(
+                    $))
         ))));
 }
 

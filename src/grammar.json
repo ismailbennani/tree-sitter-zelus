@@ -3647,7 +3647,32 @@
       "type": "SYMBOL",
       "name": "_simple_equation"
     },
-    "do_equation": {
+    "do_done_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "do"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_equation_list"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "done"
+        }
+      ]
+    },
+    "_do_equation": {
       "type": "SEQ",
       "members": [
         {
@@ -3675,24 +3700,8 @@
           ]
         },
         {
-          "type": "STRING",
-          "value": "do"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_equation_list"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "done"
+          "type": "SYMBOL",
+          "name": "do_done_block"
         }
       ]
     },
@@ -4458,7 +4467,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "do_equation"
+          "name": "_do_equation"
         },
         {
           "type": "SYMBOL",
