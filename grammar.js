@@ -142,6 +142,15 @@ module.exports = grammar({
                     $._expression
                 ))
         ),
+        _prefix_expression: ($) => choice(
+            prec(PREC.prefix,
+                seq($.prfx, $._expression)),
+            prec(PREC.neg, seq(
+                alias(choice('-', '-.'), $.prfx),
+                $._expression
+            ))
+        ),
+        last_expression: ($) => seq('last', $._ide),
         _simple_expression: ($) => choice(
             $.constructor,
             $._ext_ident,
@@ -155,8 +164,8 @@ module.exports = grammar({
             seq('[', $._seq_expression, ']'),
             seq('(', list_of(',', $._expression),
                 ')'),
-            seq('last', $._ide),
-            seq('{', label_list($._label_expr),
+            $.last_expression,
+            seq('{', label_list($.label_expr),
                 '}')
         ),
         present_expression: ($) => prec.right(PREC.present,
@@ -192,11 +201,14 @@ module.exports = grammar({
                 optional(seq('init', $._state))
             )
         ),
+        every_expression: ($) => seq(
+            'every',
+            $._expression
+        ),
         reset_expression: ($) => seq(
             'reset',
             $._seq_expression,
-            'every',
-            $._expression
+            $.every_expression
         ),
         let_expression: ($) => prec.right(PREC.match,
             seq(
@@ -219,80 +231,76 @@ module.exports = grammar({
                 $._seq_expression,
                 $.else_expression
             )),
-        _expression: ($) => choice(
+        application_expression: ($) => prec.right(
+            PREC.app,
+            seq($._simple_expression,
+                repeat1($._simple_expression)
+            )
+        ),
+        update_expression: ($) => seq(
+            '{',
             $._simple_expression,
+            'with',
+            $._simple_expression,
+            '=',
+            $._expression,
+            '}'
+        ),
+        record_access_expression: ($) => prec(PREC.dot,
+            seq($._expression, '.', $._ext_ident)
+        ),
+        tuple_expression: ($) => prec.right(PREC.seq,
+            seq($._expression, ',',
+                separated_nonempty_list(',',
+                    $._expression)
+            )
+        ),
+        slice_expression: ($) => seq(
+            $._simple_expression,
+            '{',
+            $._size_expression,
+            '..',
+            $._size_expression,
+            '}'
+        ),
+        concat_expression: ($) => seq(
+            '{',
+            $._simple_expression,
+            '|',
+            $._simple_expression,
+            '}'
+        ),
+        access_expression: ($) => prec(PREC.dot,
+            seq($._expression, '.', '(', $._expression,
+                ')')
+        ),
+        do_in_expression: ($) => seq(
+            optional($._local_list),
+            $.block_equation,
+            'in',
+            $._expression
+        ),
+        period_expression: ($) => seq('period', $._period_expression),
+        _expression: ($) => choice(
+            'init',
+            $._simple_expression,
+            $._prefix_expression,
             $._infix_expression,
-            // $.automaton_expression,
+            $.automaton_expression,
             $.match_expression,
             $.present_expression,
             $.reset_expression,
             $.if_expression,
             $.let_expression,
-            // init
-            'init',
-            // tuple
-            prec.right(PREC.seq,
-                seq($._expression, ',',
-                    separated_nonempty_list(',',
-                        $._expression)
-                )
-            ),
-            // app
-            prec.right(PREC.app,
-                seq($._simple_expression,
-                    repeat1($._simple_expression)
-                )
-            ),
-            // infx
-            // prfx
-            prec(PREC.prefix,
-                seq($.prfx, $._expression)),
-            // record update
-            seq(
-                '{',
-                $._simple_expression,
-                'with',
-                $._simple_expression,
-                '=',
-                $._expression,
-                '}'
-            ),
-            // slice
-            seq(
-                $._simple_expression,
-                '{',
-                $._size_expression,
-                '..',
-                $._size_expression,
-                '}'
-            ),
-            // concat
-            seq('{', $._simple_expression, '|',
-                $._simple_expression,
-                '}'),
-            // access
-            prec(PREC.dot,
-                seq($._expression, '.', '(', $._expression,
-                    ')')),
-            // record access
-            prec(PREC.dot,
-                seq($._expression, '.', $._ext_ident)
-            ),
-            // period
-            seq('period', $._period_expression),
-            // do in
-            seq(
-                optional($._local_list),
-                'do',
-                $._equation_list,
-                'in',
-                $._expression
-            ),
-            // prefix minus
-            prec(PREC.neg, seq(
-                alias(choice('-', '-.'), $.prfx),
-                $._expression
-            ))
+            $.application_expression,
+            $.update_expression,
+            $.record_access_expression,
+            $.tuple_expression,
+            $.slice_expression,
+            $.concat_expression,
+            $.access_expression,
+            $.do_in_expression,
+            $.period_expression
         ),
 
 
@@ -584,10 +592,11 @@ module.exports = grammar({
                 seq($.pattern, '|', $.pattern)
             ),
             prec.left(PREC.seq,
-                seq($.pattern, ',',
-                    separated_nonempty_list(
-                        ',', $
-                        .pattern))
+                seq(
+                    $.pattern, ',',
+                    separated_nonempty_list(',',
+                        $.pattern)
+                )
             ),
             seq($.constructor, $._simplepattern)
         ),
@@ -747,7 +756,7 @@ module.exports = grammar({
         _label_type: ($) => seq(
             $.identifier, ':', $._type_expression
         ),
-        _label_expr: ($) => seq(
+        label_expr: ($) => seq(
             $._ext_ident, '=', $._expression
         ),
 
@@ -802,7 +811,7 @@ module.exports = grammar({
             /'[a-z_][a-zA-Z0-9_']*/,
 
         integer: ($) =>
-            /(\d+|0[xX][0-9A-Za-z]+|0[oO][0-9]+|0[bB][0-9]+)/,
+            /(\d+|0[xX][0-9A-Fa-f]+|0[oO][0-8]+|0[bB][0-1]+)/,
         float: ($) =>
             /[0-9]+\.([0-9]*)?([eE][+\-]?[0-9]+)?/,
         // shamelessly stolen from (tree-sitter-c/grammar.js)[https://github.com/tree-sitter/tree-sitter-c/blob/master/grammar.js]

@@ -14,7 +14,8 @@ let x = 0b1
      (let_declaration (identifier) (integer))
      (let_declaration (identifier) (integer))
      (let_declaration (identifier) (integer))
-     (let_declaration (identifier) (integer)))
+     (let_declaration (identifier) (integer))
+)
 
 ==================================
 Floats
@@ -31,7 +32,8 @@ let x = 0.E-7
      (let_declaration (identifier) (float))
      (let_declaration (identifier) (float))
      (let_declaration (identifier) (float))
-     (let_declaration (identifier) (float)))
+     (let_declaration (identifier) (float))
+)
 
 ==================================
 Strings
@@ -51,7 +53,8 @@ my"
      (let_declaration (identifier) (string))
      (let_declaration (identifier) (string (escape_sequence)))
      (let_declaration (identifier) (string) (infx) (string))
-     (let_declaration (identifier) (string (ERROR (identifier)))))
+     (let_declaration (identifier) (string (ERROR (identifier))))
+)
 
 ==================================
 Chars
@@ -62,7 +65,7 @@ let x = '\n'
 let x = '\''
 let x = '\\'
 let x = '\031'
-let x = '\n' '\\'
+let x = '\n' + '\\'
 let x = ''
 
 ---
@@ -73,7 +76,7 @@ let x = ''
    (let_declaration (identifier) (char))
    (let_declaration (identifier) (char))
    (let_declaration (identifier) (char))
-   (let_declaration (identifier) (char) (char))
+   (let_declaration (identifier) (char) (infx) (char))
    (ERROR  (identifier) (UNEXPECTED '\n'))
 )
 
@@ -85,8 +88,7 @@ let x = '\0'
 
 ---
 
-(source_file (ERROR  (identifier) (UNEXPECTED '''))
-)
+(source_file (ERROR  (identifier) (UNEXPECTED ''')))
 
 ==================================
 Simple expressions: unit
@@ -96,7 +98,7 @@ let x = ()
 
 ---
 
-(source_file  (let_declaration (identifier)))
+(source_file (let_declaration (identifier)))
 
 ==================================
 Simple expressions: nil
@@ -106,7 +108,7 @@ let x = []
 
 ---
 
-(source_file  (let_declaration (identifier)))
+(source_file (let_declaration (identifier)))
 
 ==================================
 Simple expressions: constructor
@@ -126,7 +128,9 @@ let x = dummy
 
 ---
 
-(source_file (let_declaration  (identifier) (identifier)))
+(source_file
+  (let_declaration (identifier) (identifier))
+)
 
 
 ==================================
@@ -137,7 +141,9 @@ let x = Dummy.dummy
 
 ---
 
-(source_file (let_declaration  (identifier) (constructor) (identifier)))
+(source_file
+  (let_declaration (identifier) (constructor) (identifier))
+)
 
 ==================================
 Simple expressions: sequence
@@ -147,7 +153,9 @@ let x = 249; 3
 
 ---
 
-(source_file (let_declaration  (identifier) (integer) (integer)))
+(source_file
+  (let_declaration (identifier) (integer) (integer))
+)
 
 ==================================
 Simple expressions: paren
@@ -157,7 +165,9 @@ let x = (249; some_val)
 
 ---
 
-(source_file (let_declaration  (identifier) (integer) (identifier)))
+(source_file
+  (let_declaration (identifier) (integer) (identifier))
+)
 
 ==================================
 Simple expressions: type
@@ -166,7 +176,9 @@ let x = (349 : some_ty)
 
 ---
 
-(source_file (let_declaration  (identifier) (integer) (ty_name (identifier))))
+(source_file
+  (let_declaration (identifier) (integer) (ty_name (identifier)))
+)
 
 ==================================
 Simple expressions: list
@@ -176,7 +188,9 @@ let x = [240; some_expr]
 
 ---
 
-(source_file (let_declaration  (identifier) (integer) (identifier)))
+(source_file
+  (let_declaration (identifier) (integer) (identifier))
+)
 
 ==================================
 Simple expressions: last
@@ -186,7 +200,7 @@ let x = last y
 
 ---
 
-(source_file (let_declaration  (identifier)  (identifier)))
+(source_file (let_declaration (identifier) (last_expression (identifier))))
 
 ==================================
 Simple expressions: record
@@ -196,9 +210,12 @@ let x = { x = 2; Some_Module.y = Dummy.dummy }
 
 ---
 
-(source_file (let_declaration
-     (identifier) (identifier) (integer)
-                      (constructor) (identifier) (constructor) (identifier)))
+(source_file
+  (let_declaration (identifier)
+    (label_expr (identifier) (integer))
+    (label_expr (constructor) (identifier) (constructor) (identifier))
+  )
+)
 
 ==================================
 Expression: init
@@ -208,7 +225,9 @@ let x = init
 
 ---
 
-(source_file (let_declaration  (identifier) ))
+(source_file
+  (let_declaration (identifier))
+)
 
 ==================================
 Expression: tuple
@@ -218,7 +237,9 @@ let x = 1,2
 
 ---
 
-(source_file (let_declaration  (identifier) (integer) (integer)))
+(source_file
+  (let_declaration (identifier) (tuple_expression (integer) (integer)))
+)
 
 ==================================
 Expression: fby
@@ -228,8 +249,11 @@ let x = 1 fby  2
 
 ---
 
-(source_file (let_declaration
-     (identifier) (integer) (infx) (integer)))
+(source_file
+  (let_declaration (identifier)
+    (integer) (infx) (integer)
+  )
+)
 
 ==================================
 Expression: app
@@ -239,8 +263,11 @@ let x = f   y
 
 ---
 
-(source_file (let_declaration
-     (identifier) (identifier) (identifier)))
+(source_file
+  (let_declaration (identifier)
+    (application_expression (identifier) (identifier))
+  )
+)
 
 ==================================
 Expression: run
@@ -250,9 +277,11 @@ let x = run f  g x
 
 ---
 
-(source_file (let_declaration
-   (identifier)
-  (prfx) (identifier) (identifier) (identifier)))
+(source_file
+  (let_declaration (identifier)
+    (prfx) (application_expression (identifier) (identifier) (identifier))
+  )
+)
 
 ==================================
 Expression: infx kwd
@@ -262,9 +291,11 @@ let x = y mod z
 
 ---
 
-(source_file (let_declaration
-   (identifier)
-  (identifier) (infx) (identifier)))
+(source_file
+  (let_declaration (identifier)
+    (identifier) (infx) (identifier)
+  )
+)
 
 ==================================
 Expression: infx sym
@@ -274,9 +305,11 @@ let x = y == z
 
 ---
 
-(source_file (let_declaration
-   (identifier)
-  (identifier) (infx) (identifier)))
+(source_file
+  (let_declaration (identifier)
+    (identifier) (infx) (identifier)
+  )
+)
 
 ==================================
 Expression: update
@@ -286,8 +319,11 @@ let x = { e with x = 3 }
 
 ---
 
-(source_file (let_declaration
-     (identifier) (identifier)  (identifier) (integer)))
+(source_file
+  (let_declaration (identifier)
+    (update_expression (identifier) (identifier) (integer))
+  )
+)
 
 ==================================
 Expression: slice
@@ -297,8 +333,11 @@ let x = e{5 .. 6}
 
 ---
 
-(source_file (let_declaration
-     (identifier) (identifier) (integer) (integer)))
+(source_file
+  (let_declaration (identifier)
+    (slice_expression (identifier) (integer) (integer))
+  )
+)
 
 ==================================
 Expression: concat
@@ -308,7 +347,11 @@ let x = {5 |6}
 
 ---
 
-(source_file (let_declaration  (identifier) (integer) (integer)))
+(source_file
+  (let_declaration (identifier)
+    (concat_expression (integer) (integer))
+  )
+)
 
 ==================================
 Expression: access
@@ -318,7 +361,11 @@ let x = f.(x)
 
 ---
 
-(source_file (let_declaration  (identifier) (identifier) (identifier)))
+(source_file
+  (let_declaration (identifier)
+    (access_expression (identifier) (identifier))
+  )
+)
 
 ==================================
 Expression: record access
@@ -328,9 +375,11 @@ let x = x.Dummy.x
 
 ---
 
-(source_file (let_declaration
-     (identifier)
-	(identifier) (constructor) (identifier)))
+(source_file
+  (let_declaration (identifier)
+    (record_access_expression (identifier) (constructor) (identifier))
+  )
+)
 
 ==================================
 Expression: let
@@ -340,9 +389,13 @@ let x = let rec x=5 in x
 
 ---
 
-(source_file (let_declaration
-	 (identifier) (let_expression (eq_equation (pattern (identifier)) (integer))
-	 (identifier))))
+(source_file
+  (let_declaration (identifier)
+    (let_expression
+      (eq_equation (pattern (identifier)) (integer))
+      (identifier))
+  )
+)
 
 ==================================
 Expression: period
@@ -352,9 +405,11 @@ let x = period(5)
 
 ---
 
-(source_file (let_declaration
-	 (identifier)  (integer)
-))
+(source_file
+  (let_declaration (identifier)
+    (period_expression (integer))
+  )
+)
 
 ==================================
 Expression: match
@@ -365,12 +420,34 @@ let x =
 
 ---
 
-(source_file (let_declaration
-	 (identifier)
-     (match_expression (identifier)
-        (match_handler_expression (pattern (integer)))
-        (match_handler_expression (pattern)))
-))
+(source_file
+  (let_declaration (identifier)
+    (match_expression (identifier)
+      (match_handler_expression (pattern (integer)))
+      (match_handler_expression (pattern))
+    )
+  )
+)
+
+==================================
+Expression: automaton
+==================================
+
+let x =
+  automaton
+    | X -> do () done
+    init X
+
+---
+
+(source_file
+  (let_declaration (identifier)
+    (automaton_expression
+      (automaton_handler_expression (constructor) (block_expression))
+      (constructor)
+    )
+  )
+)
 
 ==================================
 Expression: present init
@@ -381,10 +458,13 @@ let x =
 
 ---
 
-(source_file (let_declaration
-	 (identifier)
-     (present_expression (present_handler_expression (identifier)))
-))
+(source_file
+  (let_declaration (identifier)
+    (present_expression
+      (present_handler_expression (identifier))
+    )
+  )
+)
 
 ==================================
 Expression: present else
@@ -395,10 +475,13 @@ let x =
 
 ---
 
-(source_file (let_declaration
-	 (identifier)
-     (present_expression (present_handler_expression (identifier)))
-))
+(source_file
+  (let_declaration (identifier)
+    (present_expression
+      (present_handler_expression (identifier))
+    )
+  )
+)
 
 ==================================
 Expression: reset
@@ -409,10 +492,12 @@ let x =
 
 ---
 
-(source_file (let_declaration
-	 (identifier)
-     (reset_expression (identifier) (integer))
-))
+(source_file
+  (let_declaration (identifier)
+    (reset_expression (identifier)
+      (every_expression (integer)))
+  )
+)
 
 ==================================
 Expression: do in
@@ -425,11 +510,14 @@ let x =
 
 ---
 
-(source_file (let_declaration
-	 (identifier)
-     (one_local (identifier))
-     (eq_equation (pattern (identifier)) (integer))
-))
+(source_file
+  (let_declaration (identifier)
+    (do_in_expression
+      (one_local (identifier))
+      (block_equation (eq_equation (pattern (identifier)) (integer)))
+    )
+  )
+)
 
 ==================================
 Expression: if then else
@@ -439,6 +527,8 @@ let x = if u then () else ()
 
 ---
 
-(source_file (let_declaration
-    (identifier) (if_expression (identifier) (else_expression))
-))
+(source_file
+  (let_declaration (identifier)
+    (if_expression (identifier) (else_expression))
+  )
+)
