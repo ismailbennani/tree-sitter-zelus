@@ -448,8 +448,14 @@ let x =
 (source_file
   (let_declaration (identifier)
     (automaton_expression
-      (automaton_handler_expression (constructor) (block_expression))
-      (automaton_handler_expression (constructor) (block_expression))
+      (automaton_handler_expression
+        (state_pat (constructor)) (block_expression)
+        (transition)
+      )
+      (automaton_handler_expression
+        (state_pat (constructor)) (block_expression)
+        (transition)
+      )
       (constructor)
     )
   )

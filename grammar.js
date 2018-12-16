@@ -303,7 +303,32 @@ module.exports = grammar({
             $.period_expression
         ),
 
-
+        _escape_list: ($) => prec.left(PREC.seq,
+            separated_nonempty_list(
+                'else', $.escape
+            )
+        ),
+        escape: ($) => choice(
+            seq($._scondpat, choice('then', 'continue'), $._state),
+            seq($._scondpat, choice('then', 'continue'), $.emission,
+                $._state)
+        ),
+        emission: ($) => choice(
+            seq($.one_let, 'in', optional($._let_list)),
+            seq(block('_block_optional_equation')($),
+                'in')
+        ),
+        transition: ($) => choice(
+            'done',
+            seq(choice('then', 'continue'), $._state),
+            seq(choice('then', 'continue'),
+                $.emission, $._state),
+            seq(choice('until', 'unless'),
+                $._escape_list),
+            prec.right(PREC.automaton,
+                seq('until', $._escape_list,
+                    'unless', $._escape_list))
+        ),
         automaton_handler_equation: automaton_handler(
             '_block_optional_equation'
         ),
@@ -440,7 +465,7 @@ module.exports = grammar({
                 optional('end')
             )
         ),
-        automaton_equation: ($) => prec.right(
+        automaton_equation: ($) => prec.left(
             PREC.automaton,
             seq(
                 'automaton',
@@ -734,7 +759,7 @@ module.exports = grammar({
                 ')'
             )
         ),
-        _state_pat: ($) => choice(
+        state_pat: ($) => choice(
             $.constructor,
             seq($.constructor, '(', list_of(
                     ',',
@@ -898,51 +923,11 @@ function block(rule_name) {
 }
 
 function automaton_handler(rule_name) {
-    function _emission($) {
-        return choice(
-            seq($.one_let, 'in', optional($._let_list)),
-            seq(block('_block_optional_equation')($),
-                'in')
-        );
-    }
-
-    function _then_cont($) {
-        return choice('then', 'continue');
-    }
-
-    function _until_unless($) {
-        return choice('until', 'unless');
-    }
-
-    function _escape($) {
-        return choice(
-            seq($._scondpat, _then_cont($), $._state),
-            seq($._scondpat, _then_cont($), _emission($),
-                $._state)
-        );
-    }
-
-    function _escape_list($) {
-        return prec.left(PREC.seq,
-            separated_nonempty_list(
-                'else', _escape($)
-            ));
-    }
-
     return ($) => seq(
-        $._state_pat,
+        $.state_pat,
         '->',
         block(rule_name)($),
-        choice(
-            'done',
-            seq(_then_cont($), $._state),
-            seq(_then_cont($),
-                _emission($), $._state),
-            seq(_until_unless($),
-                _escape_list($)),
-            seq('until', _escape_list($),
-                'unless', _escape_list($))
-        ));
+        $.transition);
 }
 
 function match_handler(rule_name) {

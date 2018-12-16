@@ -13,11 +13,13 @@ let hybrid f x = () where
 (source_file
 	(fun_declaration (kind) (fun_name) (identifier)
 	 	(automaton_equation
-			(automaton_handler_equation (constructor)
+			(automaton_handler_equation (state_pat (constructor))
 				(block_equation (eq_equation (pattern (identifier)) (integer)))
+				(transition)
 			)
-			(automaton_handler_equation (constructor)
+			(automaton_handler_equation (state_pat (constructor))
 				(block_equation (eq_equation (pattern (identifier)) (integer)))
+				(transition)
 			)
 		)
 	)
@@ -36,10 +38,10 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(automaton_equation
-			(automaton_handler_equation (constructor)
+			(automaton_handler_equation (state_pat (constructor))
 				(block_equation
 					(eq_equation (pattern (identifier)) (integer)))
-					(constructor)))
+					(transition (constructor))))
 ))
 
 ==================================
@@ -55,9 +57,9 @@ let hybrid f x = () where
 (source_file (fun_declaration
 	 (kind) (fun_name) (identifier)
 	 	(automaton_equation
-			(automaton_handler_equation (constructor)
+			(automaton_handler_equation (state_pat (constructor))
 				(block_equation (eq_equation (pattern (identifier)) (integer)))
-		  	(block_equation (emit_equation (identifier))) (constructor) (integer)))
+		  	(transition (emission (block_equation (emit_equation (identifier)))) (constructor) (integer))))
 ))
 
 ==================================
@@ -74,17 +76,25 @@ let hybrid f x = () where
 
 ---
 
-(source_file (fun_declaration
-	 (kind) (fun_name) (identifier)
-	 (automaton_equation
-		(automaton_handler_equation (constructor)
-		 (block_equation (eq_equation (pattern (identifier)) (integer)))
-		 (one_let (eq_equation (pattern (identifier)) (integer)))
-		 (one_local (identifier)  (integer))
-		 (block_equation (eq_equation (pattern (identifier)) (integer)))
-		  	(constructor) (integer))
-		 (constructor))
-))
+(source_file
+	(fun_declaration
+		(kind) (fun_name) (identifier)
+		(automaton_equation
+			(automaton_handler_equation (state_pat (constructor))
+				(block_equation (eq_equation (pattern (identifier)) (integer)))
+				(transition
+					(emission
+						(one_let (eq_equation (pattern (identifier)) (integer)))
+						(one_local (identifier)  (integer))
+						(block_equation (eq_equation (pattern (identifier)) (integer)))
+					)
+					(constructor) (integer)
+				)
+			)
+			(constructor)
+		)
+	)
+)
 
 ==================================
 Simple equation: match
